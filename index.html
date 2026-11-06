@@ -61,6 +61,14 @@
   .posts figcaption b{ display:block; font-family:"Barlow Condensed"; font-weight:700; font-size:24px; line-height:1.05; letter-spacing:0; text-transform:uppercase; color:var(--ink); margin-bottom:6px; }
   .posts figcaption span{ display:block; font-family:"Inter Tight", Helvetica, Arial, sans-serif; font-size:15px; letter-spacing:0; color:#4a4a45; margin-top:6px; }
 
+  /* stories: a light frame so the pale ones separate from the page; a card for what is only done in the app */
+  .stories a{ outline:1px solid rgba(20,20,20,.12); outline-offset:-1px; }
+  .stories figcaption a{ outline:0; }
+  .in-app{ border-top:2px solid var(--ink); padding-top:14px; }
+  .in-app b{ display:block; font-family:"Barlow Condensed"; font-weight:700; font-size:24px; line-height:1.05; text-transform:uppercase; margin-bottom:6px; }
+  .in-app small{ display:block; font-family:"JetBrains Mono"; font-size:12px; letter-spacing:.06em; color:#6d6b64; }
+  .in-app span{ display:block; font-size:15px; color:#4a4a45; margin-top:6px; }
+
   /* profile grid preview: three separate tiles in Instagram's 3:4 crop, 3 px apart, each one opens its own post */
   .row3{ display:grid; grid-template-columns:repeat(3,1fr); gap:3px; max-width:760px; margin-top:36px; }
   .row3 a{ display:block; overflow:hidden; background:#e2dfd6; }
@@ -75,7 +83,7 @@
 
 <nav><div class="wrap">
   <img src="https://arturovicav-debug.github.io/naw/img/naw-logo-white.png" alt="NAW">
-  <a href="#fijadas">Versión A</a><a href="#puzle">Versión B</a><a href="#la-carta">La carta</a><a href="#posts">Los posts</a><a href="https://arturovicav-debug.github.io/naw/">Web de NAW</a>
+  <a href="#fijadas">Versión A</a><a href="#puzle">Versión B</a><a href="#la-carta">La carta</a><a href="#posts">Los posts</a><a href="#stories">Stories</a><a href="https://arturovicav-debug.github.io/naw/">Web de NAW</a>
 </div></nav>
 
 <header class="hero"><div class="wrap">
@@ -156,6 +164,37 @@
     <figure><a href="posts/NAW-POST_10_como-nacio-naw.jpg" target="_blank"><img src="posts/NAW-POST_10_como-nacio-naw.jpg" alt="Manos cortando tejido negro con tijeras de sastre bajo un flexo, de noche" loading="lazy"></a><figcaption><b>Cómo nació NAW</b>10 · DOM 22 · 11:11 · REEL · <a href="posts/NAW-POST_10_como-nacio-naw.jpg" download>JPG</a><span>Esto solo acaba de empezar.</span></figcaption></figure>
   </div>
   <p class="note">Formato de cada imagen: 1080 × 1350. Imágenes generadas con ChatGPT: las prendas y las personas son una aproximación. El lookbook, la guía, Así se lleva NAW y Cómo nació NAW necesitan fotos reales antes de publicarse. Los Reels aún necesitan su vídeo y los carruseles, el resto de slides.</p>
+</div></section>
+
+<!-- STORIES DE ESTA SEMANA: 6, 7 Y 8 DE NOVIEMBRE -->
+<section id="stories"><div class="wrap">
+  <span class="k">05 · Stories · Esta semana</span>
+  <h2>Una historia al día. <span>Hasta el 11.11.</span></h2>
+  <p class="lead">Las stories del viernes, el sábado y el domingo, en orden de publicación. La imagen sube tal cual y el sticker se añade en la app de Instagram, en el hueco que deja cada una, con el texto que va debajo.</p>
+
+  <h3>Viernes 6</h3>
+  <div class="gal g4 posts stories">
+    <figure><a href="stories/NAW-STORY_01_once-once.jpg" target="_blank"><img src="stories/NAW-STORY_01_once-once.jpg" alt="Pantalla negra con 11.11 en pequeño en el centro" loading="lazy"></a><figcaption><b>11.11</b>01 · AHORA · <a href="stories/NAW-STORY_01_once-once.jpg" download>JPG</a><span>Sin sticker. Si ya subisteis esta ayer, se salta.</span></figcaption></figure>
+    <figure><a href="stories/NAW-STORY_02_quedan-5.jpg" target="_blank"><img src="stories/NAW-STORY_02_quedan-5.jpg" alt="Un 5 enorme y la palabra días sobre negro" loading="lazy"></a><figcaption><b>Quedan 5 días</b>02 · 11:11 · <a href="stories/NAW-STORY_02_quedan-5.jpg" download>JPG</a><span>Crea la cuenta atrás "NAW · 11.11", hasta el 11 de noviembre a las 11:11. Va en el hueco de abajo.</span></figcaption></figure>
+    <figure><a href="stories/NAW-STORY_03_el-deseo.jpg" target="_blank"><img src="stories/NAW-STORY_03_el-deseo.jpg" alt="Un diente de león en blanco y negro con semillas subiendo" loading="lazy"></a><figcaption><b>El deseo</b>03 · 19:11 · <a href="stories/NAW-STORY_03_el-deseo.jpg" download>JPG</a><span>Encuesta en el centro: "¿Pides un deseo cuando ves las 11:11?" Respuestas: Siempre / Desde hoy.</span></figcaption></figure>
+    <div class="in-app"><b>Comparte el post</b><small>SIN IMAGEN · TRAS LAS 21:11</small><span>Cuando publiques "Algo se está tejiendo", compártelo en stories desde el propio post.</span></div>
+  </div>
+
+  <h3>Sábado 7</h3>
+  <div class="gal g4 posts stories">
+    <figure><a href="stories/NAW-STORY_04_quedan-4.jpg" target="_blank"><img src="stories/NAW-STORY_04_quedan-4.jpg" alt="Un 4 enorme y la palabra días sobre fondo hueso" loading="lazy"></a><figcaption><b>Quedan 4 días</b>04 · 11:11 · <a href="stories/NAW-STORY_04_quedan-4.jpg" download>JPG</a><span>Reutiliza la misma cuenta atrás del viernes, en el hueco de abajo.</span></figcaption></figure>
+    <figure><a href="stories/NAW-STORY_05_cuatro-muestras.jpg" target="_blank"><img src="stories/NAW-STORY_05_cuatro-muestras.jpg" alt="Cuatro muestras de tejido dobladas en caramelo, rosa, salvia y lila" loading="lazy"></a><figcaption><b>Cuatro muestras</b>05 · 14:11 · <a href="stories/NAW-STORY_05_cuatro-muestras.jpg" download>JPG</a><span>Deslizador abajo: "¿Cuál te llama?"</span></figcaption></figure>
+    <figure><a href="stories/NAW-STORY_06_que-te-mueve.jpg" target="_blank"><img src="stories/NAW-STORY_06_que-te-mueve.jpg" alt="Pies descalzos sobre una esterilla, con una franja de luz en el suelo de madera" loading="lazy"></a><figcaption><b>Qué te mueve</b>06 · 19:11 · <a href="stories/NAW-STORY_06_que-te-mueve.jpg" download>JPG</a><span>Caja de preguntas arriba: "¿Qué te mueve este invierno?"</span></figcaption></figure>
+  </div>
+
+  <h3>Domingo 8</h3>
+  <div class="gal g4 posts stories">
+    <figure><a href="stories/NAW-STORY_07_quedan-3.jpg" target="_blank"><img src="stories/NAW-STORY_07_quedan-3.jpg" alt="Un 3 enorme y la palabra días sobre negro" loading="lazy"></a><figcaption><b>Quedan 3 días</b>07 · 11:11 · <a href="stories/NAW-STORY_07_quedan-3.jpg" download>JPG</a><span>Reutiliza la misma cuenta atrás, en el hueco de abajo.</span></figcaption></figure>
+    <figure><a href="stories/NAW-STORY_08_lo-que-os-mueve.jpg" target="_blank"><img src="stories/NAW-STORY_08_lo-que-os-mueve.jpg" alt="Titular: Lo que os mueve. En vuestras palabras." loading="lazy"></a><figcaption><b>Lo que os mueve</b>08 · 14:11 · <a href="stories/NAW-STORY_08_lo-que-os-mueve.jpg" download>JPG</a><span>Pon en el hueco de abajo dos respuestas reales de la caja del sábado.</span></figcaption></figure>
+    <figure><a href="stories/NAW-STORY_09_en-una-palabra.jpg" target="_blank"><img src="stories/NAW-STORY_09_en-una-palabra.jpg" alt="Mujer de espaldas recogiéndose el pelo, con la parte de arriba en sombra" loading="lazy"></a><figcaption><b>En una palabra</b>09 · 19:11 · <a href="stories/NAW-STORY_09_en-una-palabra.jpg" download>JPG</a><span>Sticker "Añade el tuyo" arriba: "Lo que te mueve, en una palabra."</span></figcaption></figure>
+    <div class="in-app"><b>Comparte el post</b><small>SIN IMAGEN · TRAS LAS 21:11</small><span>Cuando publiques "Manifiesto", compártelo en stories desde el propio post.</span></div>
+  </div>
+  <p class="note">Formato de cada story: 1080 × 1920. Las fotos están generadas con ChatGPT. Lo importante queda lejos de los bordes de arriba y de abajo, donde Instagram pone sus controles.</p>
 </div></section>
 
 <footer><div class="wrap">
