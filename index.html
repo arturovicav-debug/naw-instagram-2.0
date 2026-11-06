@@ -44,7 +44,10 @@
   @media (max-width:560px){ .gal{ grid-template-columns:1fr; } }
   .gal figure{ margin:0; }
   .gal a{ display:block; overflow:hidden; background:#e2dfd6; }
-  .gal img{ transition:transform .5s ease; }
+  /* every image keeps its space before it loads, so links to a section land in the right place */
+  .gal img{ aspect-ratio:4/5; object-fit:cover; transition:transform .5s ease; }
+  .gal.stories img{ aspect-ratio:9/16; }
+  h3[id]{ scroll-margin-top:72px; }
   .gal a:hover img{ transform:scale(1.02); }
   .gal figcaption{ font-family:"JetBrains Mono"; font-size:12px; letter-spacing:.06em; color:#6d6b64; margin-top:8px; }
   .gal figcaption a{ display:inline; background:none; text-decoration:underline; }
@@ -87,7 +90,7 @@
 
 <nav><div class="wrap">
   <img src="https://arturovicav-debug.github.io/naw/img/naw-logo-white.png" alt="NAW">
-  <a href="#fijadas">Versión A</a><a href="#puzle">Versión B</a><a href="#la-carta">La carta</a><a href="#posts">Los posts</a><a href="#stories">Stories</a><a href="#stories-b">Stories B</a><a href="https://arturovicav-debug.github.io/naw/">Web de NAW</a>
+  <a href="#fijadas">Versión A</a><a href="#puzle">Versión B</a><a href="#la-carta">La carta</a><a href="#la-carta-5">La carta en 5</a><a href="#posts">Los posts</a><a href="#stories">Stories</a><a href="#stories-b">Stories B</a><a href="https://arturovicav-debug.github.io/naw/">Web de NAW</a>
 </div></nav>
 
 <header class="hero"><div class="wrap">
