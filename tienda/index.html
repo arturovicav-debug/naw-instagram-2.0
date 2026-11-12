@@ -43,6 +43,7 @@
 @media (max-width: 599px) { :root { --gut: 18px; } }
 
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body { margin: 0; background: var(--bone); color: var(--taupe); font-family: var(--serif); font-size: 19px; font-weight: 500; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bone); }
@@ -277,7 +278,9 @@ main { padding-bottom: 96px; }
     '2': 'Portada 2 · Partida: el texto sobre matcha a un lado y la chica en Marbella en horizontal, más grande.',
     '3': 'Portada 3 · Banner: la foto horizontal a todo el ancho, con el texto y Shop the drop solo sobre el cielo.'
   };
-  var state = { hero: '1', p: 'home', bag: [], bagOpen: false };
+  // A copy of the site can fix its homepage hero (window.NAW_HERO = '1' | '2' | '3'); then the comparison picker is hidden.
+  var FIXED = /^[123]$/.test(String(window.NAW_HERO || '')) ? String(window.NAW_HERO) : null;
+  var state = { hero: FIXED || '1', p: 'home', bag: [], bagOpen: false };
   function bagCount() { return state.bag.reduce(function (n, l) { return n + l.qty; }, 0); }
   function priceOf(k) { return Number(P[k].price.replace(/[^\d]/g, '')); }
 
@@ -359,10 +362,12 @@ main { padding-bottom: 96px; }
   }
 
   var app = document.getElementById('app'), note = document.querySelector('[data-note]'), toast = document.querySelector('[data-toast]');
+  if (FIXED) { document.querySelector('.pick').hidden = true; note.hidden = true; }
   var toastTimer = null, noteTimer = null;
   function parse() {
     var h = (location.hash || '').slice(1);
     var m = /^portada-([123])$/.exec(h);
+    if (m && FIXED) return { hero: FIXED, p: 'home' };
     if (m) return { hero: m[1], p: 'home' };
     if (h === 'black' || h === 'matcha') return { hero: state.hero, p: h };
     return { hero: state.hero, p: 'home' };
@@ -379,7 +384,7 @@ main { padding-bottom: 96px; }
     initLoop();
     document.querySelectorAll('[data-hero]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.hero === state.hero)); });
     document.querySelectorAll('[data-p]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.p === state.p)); });
-    if (heroChanged || note.textContent === '') showNote();
+    if (!FIXED && (heroChanged || note.textContent === '')) showNote();
     if (pageChanged || heroChanged) window.scrollTo(0, 0);
   }
   function say(msg) { toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 1800); }
@@ -457,10 +462,10 @@ main { padding-bottom: 96px; }
       if (shift) { row.scrollLeft = s + shift; L.pos += shift; if (drag && drag.row === row) drag.left += shift; }
       if (L.paused) L.pos = row.scrollLeft;
     }, { passive: true });
-    row.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') L.paused = true; });
-    row.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && !(drag && drag.row === row)) { L.paused = false; L.pos = row.scrollLeft; } });
+    // It keeps gliding even with the cursor over it; it only hands over while someone drags, swipes or scrolls it, then carries on from there.
     row.addEventListener('touchstart', function () { L.paused = true; L.resumeAt = 0; }, { passive: true });
-    row.addEventListener('touchend', function () { L.resumeAt = performance.now() + 2500; }, { passive: true });
+    row.addEventListener('touchend', function () { L.resumeAt = performance.now() + 1200; }, { passive: true });
+    row.addEventListener('wheel', function () { L.paused = true; L.resumeAt = performance.now() + 900; }, { passive: true });
     row.addEventListener('focusin', function () { L.paused = true; });
     row.addEventListener('focusout', function () { L.paused = false; L.pos = row.scrollLeft; });
     L.measure = measure; loop = L;
@@ -469,7 +474,7 @@ main { padding-bottom: 96px; }
       var dt = L.last ? Math.min(100, now - L.last) : 16; L.last = now;
       if (L.resumeAt && now > L.resumeAt) { L.paused = false; L.resumeAt = 0; L.pos = row.scrollLeft; }
       if (!L.paused && !document.hidden && L.setW) {
-        L.pos += 0.028 * dt;
+        L.pos += 0.04 * dt;
         if (L.pos > L.setW * 1.5) L.pos -= L.setW;
         row.scrollLeft = L.pos;
       }
@@ -483,6 +488,7 @@ main { padding-bottom: 96px; }
   document.addEventListener('pointerdown', function (e) {
     var row = e.target.closest('[data-drag]'); if (!row || e.pointerType !== 'mouse' || e.button !== 0) return;
     drag = { row: row, x: e.clientX, left: row.scrollLeft, moved: false };
+    if (loop && loop.row === row) { loop.paused = true; loop.resumeAt = 0; }
   });
   document.addEventListener('pointermove', function (e) {
     if (!drag) return; var dx = e.clientX - drag.x;
@@ -492,7 +498,7 @@ main { padding-bottom: 96px; }
   function endDrag() {
     if (!drag) return; var d = drag; drag = null;
     if (d.moved) { d.row.classList.remove('is-drag'); d.row.dataset.justDragged = '1'; setTimeout(function () { delete d.row.dataset.justDragged; }, 0); }
-    if (loop && loop.row === d.row) { loop.pos = d.row.scrollLeft; if (!d.row.matches(':hover')) loop.paused = false; }
+    if (loop && loop.row === d.row) { loop.pos = d.row.scrollLeft; loop.paused = false; }
   }
   ['pointerup', 'pointercancel', 'mouseup'].forEach(function (ev) { document.addEventListener(ev, endDrag); });
   window.addEventListener('blur', endDrag);
@@ -500,7 +506,7 @@ main { padding-bottom: 96px; }
   document.addEventListener('submit', function (e) { if (e.target.matches('[data-news]')) { e.preventDefault(); e.target.reset(); say('Thank you · You are on the list'); } });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && state.bagOpen) { closeBag(true); return; }
-    if (e.target.matches('input, textarea')) return; if (/^[123]$/.test(e.key)) location.hash = 'portada-' + e.key;
+    if (e.target.matches('input, textarea') || FIXED) return; if (/^[123]$/.test(e.key)) location.hash = 'portada-' + e.key;
   });
   window.addEventListener('hashchange', render);
   render();
