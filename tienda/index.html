@@ -6,15 +6,14 @@
 <meta name="robots" content="noindex">
 </head>
 <body>
-<title>NAW Shop Concepts</title>
+<title>NAW Shop Editorial</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:wght@400;500&family=Gruppo&display=swap">
 <style>
-/* Three shop layouts for NAW, one brand system.
-   A Editorial (Alo, Lululemon) · B Esencial (Yeezy) · C Marbella (Homies).
-   Bone page, taupe type, ink bands; gold only in the logo and on ink; matcha as a surface with ink text. */
+/* NAW shop, editorial direction. Bone page, taupe type, matcha bar and panels with ink text, ink bands and footer; gold only in the logo and on ink.
+   Three homepage heroes to compare: 1 triptych, 2 split, 3 full-width banner with the type on the sky. */
 :root {
   --bone: #f1efe9;
   --ink: #141414;
@@ -27,6 +26,7 @@
   --edge: rgba(105, 84, 64, 0.5);
   --on-ink-soft: #9b988f;
   --on-ink-line: rgba(241, 239, 233, 0.16);
+  --sky-shade: rgba(14, 30, 70, 0.35);
   --pick-bg: rgba(20, 20, 20, 0.9);
   --pick-fg: #f1efe9;
   --pick-dim: #9b988f;
@@ -56,6 +56,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); }
 .label { font-family: var(--label); font-size: 14px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.3; }
 .num { font-family: var(--digits); font-variant-numeric: lining-nums tabular-nums; letter-spacing: 0.03em; }
+.fig9 { font-family: var(--digits); font-style: normal; font-size: 0.9em; letter-spacing: 0.04em; }
 .double { margin: 0; font-family: var(--serif); font-weight: 400; line-height: 0.95; letter-spacing: -0.01em; text-wrap: balance; }
 .double em { font-style: italic; }
 .note { margin: 0; font-size: 15px; opacity: 0.85; }
@@ -63,19 +64,16 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .btn:hover { opacity: 0.88; }
 .btn:active { transform: scale(0.98); }
 .btn--bone { background: var(--bone); color: var(--ink); border-color: var(--bone); }
-.btn--line { background: transparent; color: inherit; border-color: currentColor; }
 .btn--full { width: 100%; }
-.link { font-family: var(--label); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 5px; background: none; border: 0; padding: 0; }
 .media { position: relative; overflow: hidden; background: var(--placeholder); }
 .media img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Shared: sizes, swatches, accordions */
 .sizes { display: flex; flex-wrap: wrap; gap: 8px; }
-.size { min-width: 58px; height: 46px; padding: 0 14px; border: 1px solid var(--edge); background: transparent; font-family: var(--label); font-size: 14px; letter-spacing: 0.16em; transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+.size { min-width: 84px; height: 46px; padding: 0 16px; border: 1px solid var(--edge); background: transparent; font-family: var(--label); font-size: 14px; letter-spacing: 0.16em; transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
 .size:hover { border-color: var(--taupe); }
 .size[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bone); }
-.swatches { display: flex; gap: 10px; }
-.sw { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--hair); box-shadow: 0 0 0 3px var(--bone); position: relative; }
+.swatches { display: flex; gap: 12px; }
+.sw { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--hair); box-shadow: 0 0 0 3px var(--bone); }
 .sw[aria-current="true"] { outline: 1px solid var(--taupe); outline-offset: 4px; }
 .acc { border-top: 1px solid var(--hair); }
 .acc:last-child { border-bottom: 1px solid var(--hair); }
@@ -85,8 +83,86 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .acc[open] summary::after { content: "\2212"; }
 .acc p { margin: 0 0 16px; font-size: 17px; }
 
-/* Picker (preview only) */
-.pick { position: fixed; z-index: 80; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; max-width: calc(100% - 24px); padding: 6px; border-radius: 999px; background: var(--pick-bg); color: var(--pick-fg); font: 13px/1.2 var(--ui); box-shadow: 0 10px 30px rgba(20, 20, 20, 0.25); backdrop-filter: blur(8px); }
+/* Header */
+.bar { background: var(--matcha); color: var(--ink); text-align: center; padding: 9px 16px; font-family: var(--label); font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; }
+.hdr { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bone); border-bottom: 1px solid var(--hair); }
+.hdr__in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; }
+.hdr__nav { display: flex; gap: 24px; }
+.hdr__nav a:hover, .hdr__bag:hover { opacity: 0.65; }
+.hdr__logo img { height: 26px; width: auto; }
+.hdr__bag { justify-self: end; }
+.hdr__menu { display: none; }
+
+/* Hero 1 · triptych */
+.h1 { display: grid; grid-template-columns: 1fr 1fr 1fr; min-height: 560px; }
+.h1 .media { min-height: 420px; }
+.h1 .mid { background: var(--matcha); color: var(--ink); display: grid; align-content: center; justify-items: center; gap: 22px; padding: 48px 28px; text-align: center; }
+.h1 .mid .double { font-size: clamp(48px, 5vw, 84px); }
+
+/* Hero 2 · split */
+.h2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); min-height: 600px; }
+.h2 .mid { background: var(--matcha); color: var(--ink); display: grid; align-content: center; gap: 22px; padding: 56px max(var(--gut), 4vw); }
+.h2 .mid .double { font-size: clamp(52px, 5.4vw, 92px); }
+.h2 .media img { object-position: 72% 50%; }
+
+/* Hero 3 · banner, type on the sky */
+.h3 { position: relative; height: min(86vh, 820px); min-height: 520px; color: var(--bone); }
+.h3 .media { position: absolute; inset: 0; }
+.h3 .media img { object-position: 62% 50%; }
+.h3 .sky { position: absolute; left: 0; right: 0; top: 0; padding-top: clamp(40px, 8vh, 88px); }
+.h3 .sky .inner { display: grid; justify-items: start; gap: 18px; max-width: 560px; }
+.h3 .sky .label { text-shadow: 0 1px 12px var(--sky-shade); }
+.h3 .sky .double { font-size: clamp(56px, 7vw, 112px); text-shadow: 0 2px 24px var(--sky-shade); }
+
+/* Slots, products, story, values */
+.slots { padding-block: 64px 16px; }
+.slots__row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.slot { aspect-ratio: 4 / 5; display: grid; place-items: center; background: var(--stone); border: 1px dashed var(--edge); color: var(--taupe); font: 13px/1.4 var(--ui); text-align: center; padding: 12px; }
+.sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; margin-bottom: 24px; }
+.sec-h .double { font-size: clamp(34px, 3.4vw, 52px); white-space: nowrap; }
+.prods { padding-block: 56px 72px; }
+.prods__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { display: grid; gap: 14px; }
+.card .media { aspect-ratio: 4 / 5; }
+.card .alt { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
+@media (hover: hover) { .card:hover .alt { opacity: 1; } }
+.card__meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; align-items: baseline; }
+.card__t { margin: 0; font-size: 30px; font-weight: 400; line-height: 1; }
+.card__t em { font-style: italic; }
+.card__sub { grid-column: 1 / -1; margin: 0; font-size: 12px; }
+.story { display: grid; grid-template-columns: 1.2fr 1fr; background: var(--ink); color: var(--bone); }
+.story .media { min-height: 520px; }
+.story__txt { display: grid; align-content: center; gap: 22px; padding: 56px max(var(--gut), 6vw); }
+.story__txt .label:first-child { color: var(--gold); }
+.story__txt .double { font-size: clamp(46px, 5vw, 80px); }
+.vals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 64px; }
+.vals p { margin: 8px 0 0; font-size: 22px; line-height: 1.25; }
+
+/* Product page */
+.pdp { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); padding-block: 20px 72px; }
+.gal { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.gal .media { aspect-ratio: 4 / 5; }
+.info { position: sticky; top: 96px; align-self: start; display: grid; gap: 20px; }
+.info .double { font-size: clamp(44px, 4.4vw, 64px); }
+.row { display: flex; justify-content: space-between; align-items: baseline; }
+.other { display: grid; grid-template-columns: 96px 1fr; align-items: center; gap: 16px; margin-top: 8px; }
+.other .media { aspect-ratio: 4 / 5; }
+
+/* Footer */
+.ftr { background: var(--ink); color: var(--bone); margin-top: 56px; }
+.ftr__in { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; padding-block: 56px 32px; }
+.news { display: grid; gap: 14px; max-width: 460px; }
+.news .double { font-size: clamp(32px, 3vw, 44px); }
+.news__row { display: flex; gap: 8px; }
+.news input { flex: 1; min-width: 0; height: 50px; padding: 0 2px; border: 0; border-bottom: 1px solid var(--on-ink-line); background: transparent; color: var(--bone); font-size: 18px; }
+.news input::placeholder { color: var(--on-ink-soft); }
+.ftr__cols { display: flex; flex-wrap: wrap; gap: 40px; }
+.ftr__cols div { display: grid; gap: 8px; align-content: start; }
+.ftr__cols .label { color: var(--on-ink-soft); font-size: 12px; }
+.ftr__base { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-block: 20px 28px; border-top: 1px solid var(--on-ink-line); color: var(--on-ink-soft); font-family: var(--label); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* Picker and toast (preview only) */
+.pick { position: fixed; z-index: 80; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; max-width: calc(100% - 24px); padding: 6px; border-radius: 999px; background: var(--pick-bg); color: var(--pick-fg); font: 13px/1.2 var(--ui); box-shadow: 0 10px 30px rgba(20, 20, 20, 0.25); }
 .pick__group { display: flex; gap: 2px; }
 .pick__sep { width: 1px; height: 20px; background: var(--on-ink-line); }
 .pick button { border: 0; background: transparent; color: var(--pick-dim); padding: 8px 12px; border-radius: 999px; white-space: nowrap; transition: background-color 0.15s ease, color 0.15s ease; }
@@ -94,209 +170,46 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .pick button[aria-pressed="true"] { background: var(--pick-fg); color: var(--ink); }
 .pick__note { position: fixed; z-index: 79; left: 50%; bottom: calc(74px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); max-width: min(560px, calc(100% - 32px)); padding: 8px 14px; border-radius: 10px; background: var(--pick-bg); color: var(--pick-fg); font: 12.5px/1.4 var(--ui); text-align: center; transition: opacity 0.4s ease, transform 0.4s ease; }
 .pick__note.is-off { opacity: 0; transform: translate(-50%, 6px); pointer-events: none; }
-@media (max-width: 599px) { .pick { border-radius: 18px; } .pick button { padding: 8px 9px; } .pick__note { bottom: calc(112px + env(safe-area-inset-bottom, 0px)); } }
 .toast { position: fixed; z-index: 81; top: calc(16px + env(safe-area-inset-top, 0px)); left: 50%; transform: translate(-50%, -12px); opacity: 0; padding: 12px 18px; background: var(--ink); color: var(--bone); font-family: var(--label); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; }
 .toast.is-on { opacity: 1; transform: translate(-50%, 0); }
 main { padding-bottom: 96px; }
-.view-enter { animation: viewIn 0.35s ease both; }
-@keyframes viewIn { from { opacity: 0.4; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-/* ---------- A · Editorial ---------- */
-.va .bar { background: var(--matcha); color: var(--ink); text-align: center; padding: 9px 16px; font-family: var(--label); font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; }
-.va .hdr { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bone); border-bottom: 1px solid var(--hair); }
-.va .hdr__in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; }
-.va .hdr__nav { display: flex; gap: 24px; }
-.va .hdr__nav a:hover, .va .hdr__bag:hover { opacity: 0.65; }
-.va .hdr__logo img { height: 26px; width: auto; }
-.va .hdr__bag { justify-self: end; }
-.va .hero { display: grid; grid-template-columns: 1fr 1fr 1fr; min-height: 560px; }
-.va .hero .media { min-height: 420px; }
-.va .hero__mid { background: var(--matcha); color: var(--ink); display: grid; align-content: center; justify-items: center; gap: 22px; padding: 48px 28px; text-align: center; }
-.va .hero__mid .double { font-size: clamp(44px, 4.6vw, 72px); }
-.va .tiles { padding-block: 64px 16px; }
-.va .tiles__row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.va .tile { display: grid; gap: 14px; text-align: center; }
-.va .tile .media { aspect-ratio: 4 / 5; }
-.va .tile img { transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
-@media (hover: hover) { .va .tile:hover img { transform: scale(1.03); } }
-.va .sec-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; margin-bottom: 24px; }
-.va .sec-h .double { white-space: nowrap; }
-.va .sec-h .double { font-size: clamp(34px, 3.4vw, 52px); }
-.va .prods { padding-block: 56px 72px; }
-.va .prods__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.va .card { display: grid; gap: 14px; }
-.va .card .media { aspect-ratio: 4 / 5; }
-.va .card .alt { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
-@media (hover: hover) { .va .card:hover .alt { opacity: 1; } }
-.va .card__meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; align-items: baseline; }
-.va .card__meta .swatches { grid-column: 1 / -1; }
-.va .card__t { margin: 0; font-size: 30px; font-weight: 400; line-height: 1; }
-.va .card__t em { font-style: italic; }
-.va .story { display: grid; grid-template-columns: 1.2fr 1fr; background: var(--ink); color: var(--bone); }
-.va .story .media { min-height: 520px; }
-.va .story__txt { display: grid; align-content: center; gap: 22px; padding: 56px max(var(--gut), 6vw); }
-.va .story__txt .label:first-child { color: var(--gold); }
-.va .story__txt .double { font-size: clamp(46px, 5vw, 80px); }
-.va .vals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 64px; }
-.va .vals p { margin: 8px 0 0; font-size: 22px; line-height: 1.25; }
-.va .pdp { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); padding-block: 20px 72px; }
-.va .gal { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.va .gal .media { aspect-ratio: 4 / 5; }
-.va .info { position: sticky; top: 96px; align-self: start; display: grid; gap: 20px; }
-.va .info .double { font-size: clamp(44px, 4.4vw, 64px); }
-.va .crumbs { margin-bottom: 6px; }
-.va .row { display: flex; justify-content: space-between; align-items: baseline; }
 @media (max-width: 899px) {
-  .va .hdr__nav { display: none; }
-  .va .hdr__menu { display: inline-block !important; }
-  .va .hero { grid-template-columns: 1fr 1fr; min-height: 0; }
-  .va .hero__mid { grid-column: 1 / -1; order: -1; }
-  .va .hero .media { min-height: 0; aspect-ratio: 4 / 5; }
-  .va .tiles__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .va .story { grid-template-columns: 1fr; }
-  .va .story .media { min-height: 0; aspect-ratio: 4 / 5; }
-  .va .vals { grid-template-columns: 1fr; gap: 22px; }
-  .va .pdp { grid-template-columns: 1fr; padding-top: 0; }
-  .va .pdp > .gal { margin-inline: calc(-1 * max(var(--gut), env(safe-area-inset-left, 0px))); display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 0; scrollbar-width: none; }
-  .va .pdp > .gal .media { flex: 0 0 86%; scroll-snap-align: start; }
-  .va .info { position: static; }
+  .hdr__nav { display: none; }
+  .hdr__menu { display: inline-block; }
+  .h1 { grid-template-columns: 1fr 1fr; min-height: 0; }
+  .h1 .mid { grid-column: 1 / -1; order: -1; }
+  .h1 .media { min-height: 0; aspect-ratio: 4 / 5; }
+  .h2 { grid-template-columns: 1fr; min-height: 0; }
+  .h2 .media { aspect-ratio: 4 / 5; }
+  .h2 .media img { object-position: 100% 50%; }
+  .h3 { height: 82svh; min-height: 560px; max-height: 760px; }
+  .h3 .media img { object-position: 96% 50%; }
+  .h3 .sky { padding-top: 26px; }
+  .h3 .sky .inner { gap: 12px; }
+  .h3 .sky .double { font-size: 52px; }
+  .h3 .sky .btn { min-height: 46px; padding: 0 22px; font-size: 13px; }
+  .slots__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .story { grid-template-columns: 1fr; }
+  .story .media { min-height: 0; aspect-ratio: 4 / 5; }
+  .vals { grid-template-columns: 1fr; gap: 22px; }
+  .pdp { grid-template-columns: 1fr; padding-top: 0; }
+  .pdp > .gal { margin-inline: calc(-1 * max(var(--gut), env(safe-area-inset-left, 0px))); display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 0; scrollbar-width: none; }
+  .pdp > .gal .media { flex: 0 0 86%; scroll-snap-align: start; }
+  .info { position: static; }
+  .ftr__in { grid-template-columns: 1fr; }
 }
-@media (max-width: 599px) { .va .prods__row { grid-template-columns: 1fr; gap: 40px; } }
-.hdr__menu { display: none; }
-
-/* ---------- B · Esencial ---------- */
-.vb { background: var(--bone); }
-.vb .hdr { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bone); }
-.vb .hdr__in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 60px; }
-.vb .hdr__logo img { height: 20px; width: auto; }
-.vb .filters { display: flex; gap: 22px; }
-.vb .filters button { border: 0; background: none; padding: 8px 0; font-family: var(--label); font-size: 13px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--edge); transition: color 0.15s ease; }
-.vb .filters button[aria-pressed="true"] { color: var(--taupe); }
-.vb .hdr__bag { justify-self: end; font-size: 13px; }
-.vb .grid { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 48px 32px; max-width: 920px; margin: 0 auto; padding-block: clamp(40px, 7vw, 96px) 64px; }
-.vb .item { display: grid; justify-items: center; gap: 18px; text-align: center; }
-.vb .fig { position: relative; width: 100%; max-width: 300px; transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
-@media (hover: hover) { .vb .item:hover .fig { transform: translateY(-4px); } }
-.vb .fig img, .vb .outfit img { transition: opacity 0.4s ease; }
-.vb .fig--single { aspect-ratio: 3 / 4; display: grid; place-items: center; }
-.vb .fig--single img { max-height: 100%; max-width: 86%; object-fit: contain; filter: drop-shadow(0 10px 14px rgba(20, 20, 20, 0.08)); }
-.vb .outfit { position: relative; width: 100%; aspect-ratio: 5 / 9; }
-.vb .outfit .top { position: absolute; left: 50%; top: 0; width: 66%; transform: translateX(-50%); filter: drop-shadow(0 8px 12px rgba(20, 20, 20, 0.08)); }
-.vb .outfit .top.back { opacity: 0; }
-.vb .outfit .legs { position: absolute; left: 50%; bottom: 0; height: 58%; width: auto; max-width: none; transform: translateX(-50%); filter: drop-shadow(0 8px 12px rgba(20, 20, 20, 0.08)); }
-@media (hover: hover) { .vb .item:hover .top.front { opacity: 0; } .vb .item:hover .top.back { opacity: 1; } }
-.vb .item .label { font-size: 12px; }
-.vb .item .num { font-size: 15px; }
-.vb .ftr { display: grid; justify-items: center; gap: 18px; padding-block: 24px 40px; padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); text-align: center; }
-.fig9 { font-family: var(--digits); font-style: normal; font-size: 0.9em; letter-spacing: 0.04em; }
-@media (max-width: 599px) { .vb .pdp .outfit { max-width: 250px; } }
-.vb .ftr__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; font-family: var(--label); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
-.vb .sub { display: grid; gap: 8px; width: min(380px, 100%); }
-.vb .sub input { height: 44px; padding: 0 12px; border: 1px solid var(--edge); background: transparent; font-family: var(--label); font-size: 13px; letter-spacing: 0.16em; }
-.vb .sub .btn { min-height: 44px; }
-.vb .pdp { display: grid; justify-items: center; gap: 22px; max-width: 520px; margin: 0 auto; padding-block: 24px 48px; text-align: center; }
-.vb .pdp .outfit { max-width: 330px; }
-.vb .pdp .outfit.is-back .top.front { opacity: 0; }
-.vb .pdp .outfit.is-back .top.back { opacity: 1; }
-.vb .dots { display: flex; gap: 18px; }
-.vb .dots button { border: 0; background: none; padding: 6px 0; font-family: var(--label); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--edge); }
-.vb .dots button[aria-pressed="true"] { color: var(--taupe); text-decoration: underline; text-underline-offset: 6px; }
-.vb .pdp .double { font-size: 34px; }
-.vb .pdp .sizes { justify-content: center; }
-.vb .pdp .size { min-width: 52px; height: 40px; font-size: 13px; }
-.vb .pdp .btn { width: min(340px, 100%); min-height: 46px; }
-.vb .back { justify-self: start; margin-left: max(var(--gut), env(safe-area-inset-left, 0px)); }
-.vb details.info { width: min(340px, 100%); }
-.vb details.info summary { list-style: none; cursor: pointer; font-family: var(--label); font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; }
-.vb details.info summary::-webkit-details-marker { display: none; }
-.vb details.info p { margin: 12px 0 0; font-size: 16px; }
-@media (max-width: 599px) { .vb .grid { gap: 36px 14px; } .vb .filters { gap: 14px; } .vb .hdr__in { grid-template-columns: auto 1fr auto; } .vb .filters { justify-content: center; } }
-
-/* ---------- C · Marbella ---------- */
-.vc .bar { background: var(--ink); color: var(--bone); overflow: hidden; white-space: nowrap; padding: 9px 0; font-family: var(--label); font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; }
-.vc .bar__track { display: inline-flex; gap: 48px; padding-left: 48px; animation: marquee 28s linear infinite; }
-@keyframes marquee { to { transform: translateX(-50%); } }
-.vc .hdr { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bone); border-bottom: 1px solid var(--hair); }
-.vc .hdr__in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; }
-.vc .hdr__logo img { height: 26px; width: auto; }
-.vc .hdr__bag { justify-self: end; }
-.vc .hero { position: relative; height: min(78vh, 760px); min-height: 460px; color: var(--bone); }
-.vc .hero .media { position: absolute; inset: 0; }
-.vc .hero .media img { object-position: 50% 30%; }
-.vc .hero__txt { position: absolute; inset: auto 0 12%; display: grid; justify-items: center; gap: 22px; text-align: center; padding-inline: 16px; text-shadow: 0 1px 18px rgba(20, 20, 20, 0.35); }
-.vc .hero__txt .double { font-size: clamp(64px, 10vw, 140px); }
-.vc .intro { display: grid; justify-items: center; gap: 12px; padding-block: 48px 32px; text-align: center; }
-.vc .intro .double { font-size: clamp(30px, 3vw, 44px); }
-.vc .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; }
-.vc .pcard { display: grid; gap: 14px; padding-bottom: 28px; text-align: center; background: var(--bone); }
-.vc .pcard__img { position: relative; aspect-ratio: 1 / 1; background: var(--stone); display: grid; place-items: center; overflow: hidden; }
-.vc .pcard__img img { position: absolute; top: 50%; transition: opacity 0.4s ease; filter: drop-shadow(0 10px 14px rgba(20, 20, 20, 0.1)); }
-.vc .pcard__img .main, .vc .pcard__img .alt { left: 9%; width: 50%; transform: translateY(-58%); }
-.vc .pcard__img .alt { opacity: 0; }
-.vc .pcard__img .l { right: 13%; height: 84%; width: auto; max-width: none; transform: translateY(-50%); }
-.vc .pcard__sizes { position: absolute; left: 0; right: 0; bottom: 14px; display: flex; justify-content: center; gap: 14px; font-family: var(--label); font-size: 12px; letter-spacing: 0.18em; opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
-@media (hover: hover) { .vc .pcard:hover .pcard__img .main { opacity: 0; } .vc .pcard:hover .pcard__img .alt { opacity: 1; } .vc .pcard:hover .pcard__sizes { opacity: 1; transform: none; } }
-.vc .pcard__name { font-family: var(--label); font-size: 14px; letter-spacing: 0.26em; text-transform: uppercase; }
-.vc .pcard .num { font-size: 18px; margin-top: -8px; }
-.vc .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 3px; }
-.vc .coltile { position: relative; aspect-ratio: 4 / 5; color: var(--bone); }
-.vc .coltile .media { position: absolute; inset: 0; }
-.vc .coltile .btn { position: absolute; left: 50%; bottom: 8%; transform: translateX(-50%); }
-.vc .banner { position: relative; height: min(70vh, 640px); min-height: 380px; color: var(--bone); margin-top: 3px; }
-.vc .banner .media { position: absolute; inset: 0; }
-.vc .banner .media img { object-position: 50% 60%; }
-.vc .banner__txt { position: absolute; inset: auto 0 10%; display: grid; justify-items: center; gap: 14px; text-align: center; padding-inline: 16px; text-shadow: 0 1px 18px rgba(20, 20, 20, 0.35); }
-.vc .banner__txt .double { font-size: clamp(40px, 5.4vw, 84px); }
-.vc .ig { padding-block: 56px 24px; }
-.vc .ig__h { display: grid; justify-items: center; gap: 10px; text-align: center; margin-bottom: 24px; }
-.vc .ig__h .double { font-size: clamp(30px, 3vw, 44px); }
-.vc .ig__row { display: flex; gap: 3px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); }
-.vc .ig__row::-webkit-scrollbar { display: none; }
-.vc .ig__row .media { flex: 0 0 clamp(200px, 22vw, 300px); aspect-ratio: 4 / 5; scroll-snap-align: start; }
-.vc .ftr { background: var(--ink); color: var(--bone); margin-top: 56px; }
-.vc .ftr__in { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; padding-block: 56px 32px; }
-.vc .news { display: grid; gap: 14px; max-width: 460px; }
-.vc .news .double { font-size: clamp(32px, 3vw, 44px); }
-.vc .news__row { display: flex; gap: 8px; }
-.vc .news input { flex: 1; min-width: 0; height: 50px; padding: 0 2px; border: 0; border-bottom: 1px solid var(--on-ink-line); background: transparent; color: var(--bone); font-size: 18px; }
-.vc .news input::placeholder { color: var(--on-ink-soft); }
-.vc .ftr__cols { display: flex; flex-wrap: wrap; gap: 40px; }
-.vc .ftr__cols div { display: grid; gap: 8px; align-content: start; }
-.vc .ftr__cols .label { color: var(--on-ink-soft); font-size: 12px; }
-.vc .ftr__base { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-block: 20px 28px; border-top: 1px solid var(--on-ink-line); color: var(--on-ink-soft); font-family: var(--label); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
-.vc .pdp { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); padding-block: 28px 72px; }
-.vc .stage { position: relative; aspect-ratio: 1 / 1; background: var(--stone); display: grid; place-items: center; overflow: hidden; }
-.vc .stage img { max-width: 70%; max-height: 86%; object-fit: contain; }
-.vc .stage img.photo { max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: cover; }
-.vc .thumbs { display: flex; gap: 8px; margin-top: 8px; overflow-x: auto; scrollbar-width: none; }
-.vc .thumbs::-webkit-scrollbar { display: none; }
-.vc .thumbs button { flex: 0 0 72px; width: 72px; aspect-ratio: 1 / 1; padding: 0; border: 1px solid transparent; background: var(--stone); display: grid; place-items: center; overflow: hidden; }
-.vc .thumbs button img { max-width: 78%; max-height: 86%; object-fit: contain; }
-.vc .thumbs button img.photo { max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: cover; }
-.vc .thumbs button[aria-pressed="true"] { border-color: var(--taupe); }
-.vc .pinfo { display: grid; gap: 18px; align-content: start; }
-.vc .pinfo .double { font-size: clamp(42px, 4vw, 60px); }
-.vc .ship { border: 1px solid var(--hair); }
-.vc .ship > div { display: flex; gap: 12px; padding: 12px 16px; font-size: 16px; border-top: 1px solid var(--hair); }
-.vc .ship > div:first-child { border-top: 0; background: var(--ink); color: var(--bone); font-family: var(--label); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; }
-@media (max-width: 899px) {
-  .vc .hero { height: 72vh; }
-  .vc .ftr__in { grid-template-columns: 1fr; }
-  .vc .pdp { grid-template-columns: 1fr; padding-top: 0; }
-  .vc .pdp > div:first-child { margin-inline: calc(-1 * max(var(--gut), env(safe-area-inset-left, 0px))); }
-  .vc .thumbs { padding-inline: max(var(--gut), env(safe-area-inset-left, 0px)); }
-}
-@media (max-width: 599px) { .vc .grid, .vc .cols { grid-template-columns: 1fr; } }
+@media (max-width: 599px) { .prods__row { grid-template-columns: 1fr; gap: 40px; } .pick { border-radius: 18px; } .pick button { padding: 8px 9px; } .pick__note { bottom: calc(112px + env(safe-area-inset-bottom, 0px)); } }
 </style>
 
 <main id="app" aria-live="polite"></main>
 <div class="toast" role="status" data-toast></div>
 <p class="pick__note" data-note></p>
-<nav class="pick" aria-label="Vista previa: versión y página">
-  <div class="pick__group" role="group" aria-label="Versión">
-    <button type="button" data-v="a">A · Editorial</button>
-    <button type="button" data-v="b">B · Esencial</button>
-    <button type="button" data-v="c">C · Marbella</button>
+<nav class="pick" aria-label="Vista previa: portada y página">
+  <div class="pick__group" role="group" aria-label="Portada">
+    <button type="button" data-hero="1">Portada 1</button>
+    <button type="button" data-hero="2">Portada 2</button>
+    <button type="button" data-hero="3">Portada 3</button>
   </div>
   <span class="pick__sep" aria-hidden="true"></span>
   <div class="pick__group" role="group" aria-label="Página">
@@ -309,241 +222,133 @@ main { padding-bottom: 96px; }
 <script>
 (function () {
   'use strict';
-
+  var IG = 'https://www.instagram.com/nawyoga/';
   var P = {
     black: {
-      key: 'black', first: 'Black', title: 'Black set', price: '€95', code: '001 · BK', swatch: '#141414', other: 'matcha',
-      photo: { front: 'img/black-front.jpg', back: 'img/black-back.jpg', trav: 'img/black-trav.jpg', extra: 'img/black-chair.jpg' },
-      cut: { topF: 'img/cut-black-top-front.png', topB: 'img/cut-black-top-back.png', legs: 'img/cut-black-leggings.png', fold: 'img/cut-black-leggings-fold.png' },
-      figure: 'gold',
-      alt: { front: 'The black NAW set on cream boucle, the top seen from the front', back: 'The black top turned over: the teardrop cut-out with the NAW logo below', trav: 'The black top and folded leggings on travertine in soft sun', extra: 'The black set folded on a tan leather armchair' }
+      key: 'black', first: 'Black', title: 'Black set', price: '€95', swatch: '#141414', other: 'matcha', figure: 'gold',
+      gallery: [['img/black-back.jpg', 'The black top turned over: the teardrop cut-out with the NAW logo below, the leggings beside it'], ['img/black-front.jpg', 'The black NAW set on cream boucle, the top seen from the front, plain'], ['img/black-chair-v2.jpg', 'The black set on a cognac leather armchair with a cream leather cushion, the top showing its back and logo'], ['img/black-back-v2.jpg', 'The black set laid out casually on cream boucle, the top face down with the logo under the cut-out']]
     },
     matcha: {
-      key: 'matcha', first: 'Matcha', title: 'Matcha set', price: '€130', code: '001 · MT', swatch: '#d3d9be', other: 'black',
-      photo: { front: 'img/matcha-front.jpg', back: 'img/matcha-back.jpg', trav: 'img/matcha-trav.jpg', extra: 'img/matcha-dark.jpg' },
-      cut: { topF: 'img/cut-matcha-top-front.png', topB: 'img/cut-matcha-top-back.png', legs: 'img/cut-matcha-leggings.png', fold: 'img/cut-matcha-leggings-fold.png' },
-      figure: 'copper',
-      alt: { front: 'The matcha NAW set on cream boucle, the top seen from the front', back: 'The matcha top turned over: the teardrop cut-out with the NAW logo below', trav: 'The matcha top and folded leggings on travertine with an iced matcha', extra: 'Close-up of the matcha set on black, with the logo on the back of the top' }
+      key: 'matcha', first: 'Matcha', title: 'Matcha set', price: '€130', swatch: '#d3d9be', other: 'black', figure: 'copper',
+      gallery: [['img/matcha-back.jpg', 'The matcha top turned over: the teardrop cut-out with the NAW logo below, the leggings beside it'], ['img/matcha-front.jpg', 'The matcha NAW set on cream boucle, the top seen from the front, plain'], ['img/matcha-trav.jpg', 'The matcha top and folded leggings on travertine beside an iced matcha'], ['img/matcha-dark.jpg', 'Close-up of the matcha set on black, with the logo on the back of the top']]
     }
   };
-  var SIZES = ['XS', 'S', 'M', 'L'];
+  var SIZES = ['S/M', 'M/L'];
   var NOTES = {
-    a: 'A · Editorial — Alo y Lululemon: franja en matcha, portada en tres paneles, accesos por imagen, fichas con muestras de color y un bloque de historia.',
-    b: 'B · Esencial — Yeezy: solo las prendas recortadas sobre hueso, filtro Black / Matcha arriba, casi sin texto. Al pasar el ratón se ve la espalda.',
-    c: 'C · Marbella — Homies: franja que se mueve, portada a todo el ancho con Marbella, fichas sobre piedra con tallas al pasar, mosaico por color y franja de Instagram.'
+    '1': 'Portada 1 · Tríptico: el Black por detrás, NAW is NOW sobre matcha y la chica en Marbella.',
+    '2': 'Portada 2 · Partida: el texto sobre matcha a un lado y la chica en Marbella en horizontal, más grande.',
+    '3': 'Portada 3 · Banner: la foto horizontal a todo el ancho, con el texto y Shop the drop solo sobre el cielo.'
   };
-  var state = { v: 'a', p: 'home', filter: 'all', bag: 0 };
+  var state = { hero: '1', p: 'home', bag: 0 };
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function dbl(p) { return esc(p.first) + ' <em>set</em>'; }
   function desc(p) { return 'Top and leggings in ' + (p.key === 'black' ? 'black' : 'matcha green') + '. The top opens at the back in a drop, with the NAW logo just below it: white letters, ' + p.figure + ' figure. The front is plain. The logo returns on the waistband of the leggings.'; }
   function img(src, alt, cls, lazy) { return '<img src="' + src + '" alt="' + esc(alt || '') + '"' + (cls ? ' class="' + cls + '"' : '') + (lazy === false ? '' : ' loading="lazy"') + ' decoding="async">'; }
-  function sizesHtml() { return '<div class="sizes" role="group" aria-label="Size">' + SIZES.map(function (s, i) { return '<button type="button" class="size" data-size="' + s + '" aria-pressed="' + (i === 1) + '">' + s + '</button>'; }).join('') + '</div>'; }
-  function swatches(p, asLinks) { return '<div class="swatches" aria-label="Colour">' + ['black', 'matcha'].map(function (k) { return '<a href="#' + state.v + '-' + k + '" class="sw" style="background:' + P[k].swatch + '" aria-label="' + P[k].first + '"' + (k === p.key ? ' aria-current="true"' : '') + '></a>'; }).join('') + '</div>'; }
-  function go(v, p) { return '#' + v + (p && p !== 'home' ? '-' + p : ''); }
+  function href(p) { return '#' + (p === 'home' ? 'portada-' + state.hero : p); }
 
-  /* ---------- A · Editorial ---------- */
-  var A = {
-    chrome: function (inner) {
-      return '<div class="va">' +
-        '<div class="bar">Drop 001 · Made once. Never again.</div>' +
-        '<header class="hdr"><div class="wrap hdr__in">' +
-          '<nav class="hdr__nav label" aria-label="Main"><a href="' + go('a') + '#shop">Shop</a><a href="' + go('a', 'black') + '">Black</a><a href="' + go('a', 'matcha') + '">Matcha</a></nav>' +
-          '<a class="hdr__menu label" href="' + go('a') + '">Menu</a>' +
-          '<a class="hdr__logo" href="' + go('a') + '">' + img('img/naw-logo-taupe.png', 'NAW', '', false) + '</a>' +
-          '<a class="hdr__bag label" href="#" data-bag>Bag <span class="num" data-bagn>' + state.bag + '</span></a>' +
-        '</div></header>' + inner +
-        '<footer class="vc"><div class="ftr"><div class="wrap ftr__in">' +
-          '<div class="news"><p class="label" style="color:var(--gold);margin:0">Drop 002</p><p class="double">Be the first <em>to know.</em></p><form class="news__row" data-news><input type="email" placeholder="Email address" aria-label="Email address" required><button class="btn btn--bone" type="submit">Join</button></form></div>' +
-          '<div class="ftr__cols"><div><span class="label">Shop</span><a href="' + go('a', 'black') + '">Black set</a><a href="' + go('a', 'matcha') + '">Matcha set</a></div><div><span class="label">Help</span><a href="https://www.instagram.com/nawjoga/" target="_blank" rel="noopener">DM “NAW”</a><span>Shipping &amp; returns</span></div></div>' +
-        '</div><div class="wrap ftr__base"><span>© 2026 NAW</span><span>NAW is now</span></div></div></footer>' +
-      '</div>';
-    },
-    home: function () {
-      return A.chrome(
-        '<section class="hero">' +
-          '<div class="media">' + img(P.black.photo.trav, P.black.alt.trav, '', false) + '</div>' +
-          '<div class="hero__mid"><p class="label" style="margin:0">NAW Women · Drop 001</p><h1 class="double">Made once. <em>Never again.</em></h1><a class="btn" href="#shop" data-scroll="shop">Shop the drop</a></div>' +
-          '<div class="media">' + img('img/hero-marbella.jpg', 'A woman in the matcha NAW set in Marbella, La Concha behind her', '', false) + '</div>' +
-        '</section>' +
-        '<section class="wrap tiles"><div class="tiles__row">' +
-          [['black', 'front', 'Black set'], ['matcha', 'front', 'Matcha set'], ['black', 'back', 'The back'], ['matcha', 'drink', 'The colour']].map(function (t) {
-            var src = t[1] === 'drink' ? 'img/matcha-drink.jpg' : P[t[0]].photo[t[1]];
-            return '<a class="tile" href="' + go('a', t[0]) + '"><div class="media">' + img(src, t[2]) + '</div><span class="label">' + t[2] + '</span></a>';
-          }).join('') +
-        '</div></section>' +
-        '<section class="wrap prods" id="shop"><div class="sec-h"><h2 class="double">Drop <span class="fig9">001</span></h2><span class="label">2 sets · Top &amp; leggings</span></div><div class="prods__row">' +
-          ['black', 'matcha'].map(function (k) { var p = P[k]; return '<div class="card"><a class="media" href="' + go('a', k) + '">' + img(p.photo.front, p.alt.front) + img(p.photo.back, '', 'alt') + '</a><div class="card__meta"><a href="' + go('a', k) + '"><h3 class="card__t">' + dbl(p) + '</h3></a><span class="num" style="font-size:20px">' + p.price + '</span>' + swatches(p) + '</div></div>'; }).join('') +
-        '</div></section>' +
-        '<section class="story"><div class="media">' + img('img/matcha-spill.jpg', 'A glass of iced matcha knocked over on off-white marble') + '</div><div class="story__txt"><p class="label" style="margin:0">The colour</p><p class="double">It was always <em>matcha.</em></p><p style="margin:0;max-width:30ch">Pale, milky, D3D9BE. The second colour of Drop 001.</p><a class="btn btn--bone" style="justify-self:start" href="' + go('a', 'matcha') + '">Shop Matcha</a></div></section>' +
-        '<section class="wrap vals">' +
-          '<div><span class="label">One run</span><p>Made once. Never again.</p></div>' +
-          '<div><span class="label">The back</span><p>The logo sits under the drop.</p></div>' +
-          '<div><span class="label">Help</span><p>DM “NAW” on Instagram for sizes.</p></div>' +
-        '</section>'
-      );
-    },
-    pdp: function (k) {
-      var p = P[k], o = P[p.other];
-      return A.chrome(
-        '<section class="wrap pdp">' +
-          '<div class="gal">' + ['front', 'back', 'trav', 'extra'].map(function (v, i) { return '<div class="media">' + img(p.photo[v], p.alt[v], '', i < 2 ? false : true) + '</div>'; }).join('') + '</div>' +
-          '<div class="info">' +
-            '<p class="label crumbs" style="margin:0">Drop 001 / ' + esc(p.title) + '</p>' +
-            '<h1 class="double">' + dbl(p) + '</h1>' +
-            '<div class="row"><span class="num" style="font-size:26px">' + p.price + '</span><span class="note">Tax included.</span></div>' +
-            '<div style="display:grid;gap:12px"><span class="label">Colour · ' + esc(p.first) + '</span>' + swatches(p) + '</div>' +
-            '<div style="display:grid;gap:12px"><span class="label">Size</span>' + sizesHtml() + '</div>' +
-            '<button type="button" class="btn btn--full" data-add="' + k + '">Add to bag</button>' +
-            '<p class="note">Made once. Never again. DM “NAW” on Instagram if you are between sizes.</p>' +
-            '<div><details class="acc" open><summary class="label">Details</summary><p>' + esc(desc(p)) + '</p></details><details class="acc"><summary class="label">The set</summary><p>One top and one pair of leggings, sold together.</p></details></div>' +
-            '<a class="card" style="grid-template-columns:96px 1fr;align-items:center;gap:16px;margin-top:8px" href="' + go('a', o.key) + '"><div class="media" style="aspect-ratio:4/5">' + img(o.photo.front, o.alt.front) + '</div><div><span class="label">The other set</span><p class="card__t" style="font-size:24px;margin:6px 0 0">' + dbl(o) + ' <span class="num" style="font-size:17px;font-style:normal">' + o.price + '</span></p></div></a>' +
-          '</div>' +
-        '</section>'
-      );
-    }
-  };
-
-  /* ---------- B · Esencial ---------- */
-  var B = {
-    chrome: function (inner, withFilters) {
-      return '<div class="vb">' +
-        '<header class="hdr"><div class="wrap hdr__in">' +
-          '<a class="hdr__logo" href="' + go('b') + '">' + img('img/naw-logo-taupe.png', 'NAW', '', false) + '</a>' +
-          (withFilters ? '<div class="filters" role="group" aria-label="Colour">' + ['all', 'black', 'matcha'].map(function (f) { return '<button type="button" data-filter="' + f + '" aria-pressed="' + (state.filter === f) + '">' + (f === 'all' ? 'All' : P[f].first) + '</button>'; }).join('') + '</div>' : '<span></span>') +
-          '<a class="hdr__bag label" href="#" data-bag>Bag <span class="num" data-bagn>' + state.bag + '</span></a>' +
-        '</div></header>' + inner +
-        '<footer class="ftr"><form class="sub" data-news><span class="label" style="font-size:12px">Receive Drop 002 updates</span><input type="email" placeholder="EMAIL ADDRESS" aria-label="Email address" required><button class="btn" type="submit">Next</button></form><div class="ftr__links"><span>Customer care</span><span>Terms</span><span>Privacy</span><a href="https://www.instagram.com/nawjoga/" target="_blank" rel="noopener">@nawjoga</a></div></footer>' +
-      '</div>';
-    },
-    outfit: function (p, cls) { return '<div class="outfit' + (cls ? ' ' + cls : '') + '">' + img(p.cut.legs, '', 'legs') + img(p.cut.topF, p.title + ', top from the front', 'top front') + img(p.cut.topB, '', 'top back') + '</div>'; },
-    home: function () {
-      var cells;
-      if (state.filter === 'all') {
-        cells = ['black', 'matcha'].map(function (k) { var p = P[k]; return '<a class="item" href="' + go('b', k) + '"><div class="fig">' + B.outfit(p) + '</div><span class="label">' + esc(p.first) + ' set</span><span class="num">' + p.price + '</span></a>'; });
-      } else {
-        var p = P[state.filter];
-        cells = [['topF', 'Top'], ['topB', 'Top · back'], ['legs', 'Leggings']].map(function (c) { return '<a class="item" href="' + go('b', p.key) + '"><div class="fig fig--single">' + img(p.cut[c[0]], p.first + ' ' + c[1]) + '</div><span class="label">' + esc(c[1]) + '</span><span class="num">' + p.code + '</span></a>'; });
-      }
-      return B.chrome('<section class="wrap"><div class="grid" style="--cols:' + (state.filter === 'all' ? 2 : 3) + '">' + cells.join('') + '</div></section>', true);
-    },
-    pdp: function (k) {
-      var p = P[k];
-      return B.chrome(
-        '<a class="back link" href="' + go('b') + '">Back</a>' +
-        '<section class="pdp">' + B.outfit(p, '') +
-          '<div class="dots" role="group" aria-label="View"><button type="button" data-view="front" aria-pressed="true">Front</button><button type="button" data-view="back" aria-pressed="false">Back</button></div>' +
-          '<span class="label" style="font-size:12px">' + p.code + '</span>' +
-          '<h1 class="double">' + dbl(p) + '</h1>' +
-          '<span class="num" style="font-size:20px;margin-top:-10px">' + p.price + '</span>' +
-          sizesHtml() +
-          '<button type="button" class="btn" data-add="' + k + '">Add to bag</button>' +
-          '<details class="info"><summary>Information</summary><p>' + esc(desc(p)) + '</p><p class="label" style="font-size:12px">Top + leggings · Made once</p></details>' +
-          '<a class="link" href="' + go('b', p.other) + '">' + esc(P[p.other].first) + ' set</a>' +
-        '</section>', false);
-    }
-  };
-
-  /* ---------- C · Marbella ---------- */
-  var C = {
-    chrome: function (inner) {
-      var msg = ['Drop 001', 'Made once. Never again.', 'Black & Matcha', 'DM “NAW” for sizes'];
-      var line = msg.concat(msg).map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('');
-      return '<div class="vc">' +
-        '<div class="bar" aria-label="Drop 001 · Made once. Never again."><div class="bar__track" aria-hidden="true">' + line + line + '</div></div>' +
-        '<header class="hdr"><div class="wrap hdr__in"><a class="label" href="' + go('c') + '#shop" data-scroll="shop">Shop</a><a class="hdr__logo" href="' + go('c') + '">' + img('img/naw-logo-taupe.png', 'NAW', '', false) + '</a><a class="hdr__bag label" href="#" data-bag>Bag <span class="num" data-bagn>' + state.bag + '</span></a></div></header>' +
-        inner +
-        '<footer class="ftr"><div class="wrap ftr__in"><div class="news"><p class="label" style="color:var(--gold);margin:0">Newsletter</p><p class="double">Be the first to hear <em>about Drop 002.</em></p><form class="news__row" data-news><input type="email" placeholder="Email address" aria-label="Email address" required><button class="btn btn--bone" type="submit">Join</button></form></div><div class="ftr__cols"><div><span class="label">Shop</span><a href="' + go('c', 'black') + '">Black set</a><a href="' + go('c', 'matcha') + '">Matcha set</a></div><div><span class="label">Follow</span><a href="https://www.instagram.com/nawjoga/" target="_blank" rel="noopener">@nawjoga</a><a href="https://www.instagram.com/nawmoveclub/" target="_blank" rel="noopener">@nawmoveclub</a></div></div></div><div class="wrap ftr__base"><span>© 2026 NAW · Marbella</span><span>NAW is now</span></div></footer>' +
-      '</div>';
-    },
-    home: function () {
-      var ig = ['img/hero-marbella.jpg', 'img/matcha-colour.jpg', 'img/black-back.jpg', 'img/matcha-swirl.jpg', 'img/llano-marbella.jpg', 'img/matcha-back.jpg', 'img/black-chair.jpg'];
-      return C.chrome(
-        '<section class="hero"><div class="media">' + img('img/cobra-marbella.jpg', 'Black and white: a woman in the cobra pose on a wall in Marbella, La Concha behind', '', false) + '</div><div class="hero__txt"><p class="label" style="margin:0">NAW Women</p><h1 class="double">Drop <span class="fig9">001</span></h1><a class="btn btn--bone" href="#shop" data-scroll="shop">Shop now</a></div></section>' +
-        '<section class="wrap intro"><p class="label" style="margin:0">Black &amp; Matcha</p><p class="double">Two sets from Marbella. <em>Made once.</em></p></section>' +
-        '<section class="grid" id="shop">' + ['black', 'matcha'].map(function (k) { var p = P[k]; return '<a class="pcard" href="' + go('c', k) + '"><div class="pcard__img">' + img(p.cut.legs, '', 'l') + img(p.cut.topF, p.title, 'main') + img(p.cut.topB, '', 'alt') + '<div class="pcard__sizes" aria-hidden="true">' + SIZES.map(function (s) { return '<span>' + s + '</span>'; }).join('') + '</div></div><span class="pcard__name">' + esc(p.title) + '</span><span class="num">' + p.price + '</span></a>'; }).join('') + '</section>' +
-        '<section class="cols">' + ['black', 'matcha'].map(function (k) { var p = P[k]; return '<a class="coltile" href="' + go('c', k) + '"><div class="media">' + img(p.photo.extra, p.alt.extra) + '</div><span class="btn btn--bone">' + esc(p.first) + '</span></a>'; }).join('') + '</section>' +
-        '<section class="banner"><div class="media">' + img('img/llano-marbella.jpg', 'Black and white: a woman far away on open ground with the Marbella mountain behind') + '</div><div class="banner__txt"><p class="label" style="margin:0">NAW is now</p><p class="double">Move with purpose. <em>Wear confidence.</em></p></div></section>' +
-        '<section class="ig"><div class="wrap ig__h"><p class="label" style="margin:0">@nawjoga</p><p class="double">Discover the world <em>of NAW.</em></p></div><div class="ig__row">' + ig.map(function (s) { return '<a class="media" href="https://www.instagram.com/nawjoga/" target="_blank" rel="noopener">' + img(s, 'NAW on Instagram') + '</a>'; }).join('') + '</div></section>'
-      );
-    },
-    pdp: function (k) {
-      var p = P[k];
-      var views = [{ src: p.cut.topF, cut: true, alt: p.title + ', top from the front' }, { src: p.cut.topB, cut: true, alt: p.title + ', top from the back' }, { src: p.cut.legs, cut: true, alt: p.title + ', leggings' }, { src: p.photo.front, cut: false, alt: p.alt.front }, { src: p.photo.extra, cut: false, alt: p.alt.extra }];
-      return C.chrome(
-        '<section class="wrap pdp">' +
-          '<div><div class="stage" data-stage>' + img(views[0].src, views[0].alt, '', false) + '</div><div class="thumbs" role="group" aria-label="Images">' + views.map(function (v, i) { return '<button type="button" data-thumb="' + i + '" aria-pressed="' + (i === 0) + '" aria-label="Image ' + (i + 1) + '">' + img(v.src, '', v.cut ? '' : 'photo', false) + '</button>'; }).join('') + '</div></div>' +
-          '<div class="pinfo">' +
-            '<p class="label" style="margin:0">Drop 001</p>' +
-            '<h1 class="double">' + dbl(p) + '</h1>' +
-            '<span class="num" style="font-size:26px">' + p.price + '</span>' +
-            '<div style="display:grid;gap:12px"><span class="label">Size</span>' + sizesHtml() + '</div>' +
-            '<button type="button" class="btn btn--full" data-add="' + k + '">Add to bag</button>' +
-            '<div class="ship"><div>Drop 001 · Limited units</div><div>Tax included. Shipping at checkout.</div><div>DM “NAW” on Instagram for sizes.</div></div>' +
-            '<div><details class="acc" open><summary class="label">Description</summary><p>' + esc(desc(p)) + '</p></details><details class="acc"><summary class="label">The set</summary><p>One top and one pair of leggings, sold together. Made once.</p></details></div>' +
-          '</div>' +
-        '</section>'
-      ).replace('data-stage>', 'data-stage data-views=\'' + JSON.stringify(views).replace(/'/g, '&#39;') + '\'>');
-    }
-  };
-
-  var V = { a: A, b: B, c: C };
-  var app = document.getElementById('app');
-  var note = document.querySelector('[data-note]');
-  var toast = document.querySelector('[data-toast]');
-  var toastTimer = null, noteTimer = null;
-
-  function parse() {
-    var h = (location.hash || '#a').slice(1).split('-');
-    var v = V[h[0]] ? h[0] : 'a';
-    var p = (h[1] === 'black' || h[1] === 'matcha') ? h[1] : 'home';
-    return { v: v, p: p };
+  function chrome(inner) {
+    return '<div class="bar">Drop 001 · NAW is NOW</div>' +
+      '<header class="hdr"><div class="wrap hdr__in">' +
+        '<nav class="hdr__nav label" aria-label="Main"><a href="#shop" data-shop>Shop</a><a href="#black">Black</a><a href="#matcha">Matcha</a></nav>' +
+        '<a class="hdr__menu label" href="#shop" data-shop>Menu</a>' +
+        '<a class="hdr__logo" href="' + href('home') + '">' + img('img/naw-logo-taupe.png', 'NAW', '', false) + '</a>' +
+        '<a class="hdr__bag label" href="#" data-bag>Bag <span class="num" data-bagn>' + state.bag + '</span></a>' +
+      '</div></header>' + inner +
+      '<footer class="ftr"><div class="wrap ftr__in">' +
+        '<div class="news"><p class="label" style="color:var(--gold);margin:0">Drop <span class="fig9">002</span></p><p class="double">Be the first <em>to know.</em></p><form class="news__row" data-news><label class="label" for="news-email" style="position:absolute;left:-9999px">Email address</label><input id="news-email" type="email" placeholder="Email address" required><button class="btn btn--bone" type="submit">Join</button></form></div>' +
+        '<div class="ftr__cols"><div><span class="label">Shop</span><a href="#black">Black set</a><a href="#matcha">Matcha set</a></div><div><span class="label">Follow</span><a href="' + IG + '" target="_blank" rel="noopener">@nawyoga</a><a href="' + IG + '" target="_blank" rel="noopener">DM “NAW”</a></div></div>' +
+      '</div><div class="wrap ftr__base"><span>© 2026 NAW</span><span>NAW is NOW</span></div></footer>';
   }
-  function render(keepScroll) {
-    var r = parse(); var changed = r.v !== state.v || r.p !== state.p;
-    state.v = r.v; state.p = r.p;
-    app.innerHTML = state.p === 'home' ? V[state.v].home() : V[state.v].pdp(state.p);
-    app.classList.remove('view-enter'); void app.offsetWidth; app.classList.add('view-enter');
-    document.querySelectorAll('[data-v]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === state.v)); });
-    document.querySelectorAll('[data-p]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.p === state.p)); });
-    if (note.textContent !== NOTES[state.v]) {
-      note.textContent = NOTES[state.v]; note.classList.remove('is-off');
-      clearTimeout(noteTimer); noteTimer = setTimeout(function () { note.classList.add('is-off'); }, 5000);
+
+  function hero() {
+    var cta = '<a class="btn" href="#shop" data-shop>Shop the drop</a>';
+    if (state.hero === '2') {
+      return '<section class="h2"><div class="mid"><p class="label" style="margin:0">NAW Women · Drop <span class="fig9">001</span></p><h1 class="double">NAW is <em>NOW.</em></h1>' + cta + '</div><div class="media">' + img('img/hero-marbella-wide.jpg', 'A woman in the matcha NAW set on dry ground in Marbella, La Concha behind her under a deep blue sky', '', false) + '</div></section>';
     }
-    if (changed && !keepScroll) window.scrollTo(0, 0);
+    if (state.hero === '3') {
+      return '<section class="h3"><div class="media">' + img('img/hero-marbella-wide.jpg', 'A woman in the matcha NAW set on dry ground in Marbella, La Concha behind her under a deep blue sky', '', false) + '</div><div class="sky"><div class="wrap"><div class="inner"><p class="label" style="margin:0">NAW Women · Drop <span class="fig9">001</span></p><h1 class="double">NAW is <em>NOW.</em></h1><a class="btn btn--bone" href="#shop" data-shop>Shop the drop</a></div></div></div></section>';
+    }
+    return '<section class="h1"><div class="media">' + img('img/black-back.jpg', 'The black NAW top turned over, the teardrop cut-out with the logo below', '', false) + '</div><div class="mid"><p class="label" style="margin:0">NAW Women · Drop <span class="fig9">001</span></p><h1 class="double">NAW is <em>NOW.</em></h1>' + cta + '</div><div class="media">' + img('img/hero-marbella.jpg', 'A woman in the matcha NAW set in Marbella, La Concha behind her', '', false) + '</div></section>';
+  }
+
+  function home() {
+    return chrome(
+      hero() +
+      '<section class="wrap slots" aria-label="Image slots"><div class="slots__row">' + [1, 2, 3, 4].map(function (n) { return '<div class="slot">Hueco ' + n + '<br>Imagen por elegir</div>'; }).join('') + '</div></section>' +
+      '<section class="wrap prods" id="shop"><div class="sec-h"><h2 class="double">Drop <span class="fig9">001</span></h2><span class="label">2 sets · Top &amp; leggings</span></div><div class="prods__row">' +
+        ['black', 'matcha'].map(function (k) { var p = P[k]; return '<a class="card" href="#' + k + '"><div class="media">' + img(p.gallery[0][0], p.gallery[0][1]) + img(p.gallery[1][0], '', 'alt') + '</div><div class="card__meta"><h3 class="card__t">' + dbl(p) + '</h3><span class="num" style="font-size:20px">' + p.price + '</span><p class="label card__sub">Top &amp; leggings</p></div></a>'; }).join('') +
+      '</div></section>' +
+      '<section class="story"><div class="media">' + img('img/matcha-spill.jpg', 'A glass of iced matcha knocked over on off-white marble') + '</div><div class="story__txt"><p class="label" style="margin:0">The colour</p><p class="double">It was always <em>matcha.</em></p><p style="margin:0;max-width:30ch">Pale, milky, D3D9BE. The second colour of Drop 001.</p><a class="btn btn--bone" style="justify-self:start" href="#matcha">Shop Matcha</a></div></section>' +
+      '<section class="wrap vals">' +
+        '<div><span class="label">NAW is NOW</span><p>Drop <span class="fig9">001</span>, in black and matcha.</p></div>' +
+        '<div><span class="label">The back</span><p>The logo sits under the drop.</p></div>' +
+        '<div><span class="label">Help</span><p>DM “NAW” on Instagram for sizes.</p></div>' +
+      '</section>'
+    );
+  }
+
+  function pdp(k) {
+    var p = P[k], o = P[p.other];
+    return chrome(
+      '<section class="wrap pdp">' +
+        '<div class="gal">' + p.gallery.map(function (g, i) { return '<div class="media">' + img(g[0], g[1], '', i < 2 ? false : true) + '</div>'; }).join('') + '</div>' +
+        '<div class="info">' +
+          '<p class="label" style="margin:0">Drop <span class="fig9">001</span> / ' + esc(p.title) + '</p>' +
+          '<h1 class="double">' + dbl(p) + '</h1>' +
+          '<div class="row"><span class="num" style="font-size:26px">' + p.price + '</span><span class="note">Tax included.</span></div>' +
+          '<div style="display:grid;gap:12px"><span class="label">Colour · ' + esc(p.first) + '</span><div class="swatches" aria-label="Colour">' + ['black', 'matcha'].map(function (c) { return '<a href="#' + c + '" class="sw" style="background:' + P[c].swatch + '" aria-label="' + P[c].first + '"' + (c === k ? ' aria-current="true"' : '') + '></a>'; }).join('') + '</div></div>' +
+          '<div style="display:grid;gap:12px"><span class="label">Size</span><div class="sizes" role="group" aria-label="Size">' + SIZES.map(function (s, i) { return '<button type="button" class="size" data-size="' + s + '" aria-pressed="' + (i === 0) + '">' + s + '</button>'; }).join('') + '</div></div>' +
+          '<button type="button" class="btn btn--full" data-add="' + k + '">Add to bag</button>' +
+          '<p class="note">NAW is NOW. DM “NAW” on Instagram if you are between sizes.</p>' +
+          '<div><details class="acc" open><summary class="label">Details</summary><p>' + esc(desc(p)) + '</p></details><details class="acc"><summary class="label">The set</summary><p>One top and one pair of leggings, sold together.</p></details></div>' +
+          '<a class="other" href="#' + o.key + '"><div class="media">' + img(o.gallery[0][0], o.gallery[0][1]) + '</div><div><span class="label">The other set</span><p class="card__t" style="font-size:24px;margin:6px 0 0">' + dbl(o) + ' <span class="num" style="font-size:17px;font-style:normal">' + o.price + '</span></p></div></a>' +
+        '</div>' +
+      '</section>'
+    );
+  }
+
+  var app = document.getElementById('app'), note = document.querySelector('[data-note]'), toast = document.querySelector('[data-toast]');
+  var toastTimer = null, noteTimer = null;
+  function parse() {
+    var h = (location.hash || '').slice(1);
+    var m = /^portada-([123])$/.exec(h);
+    if (m) return { hero: m[1], p: 'home' };
+    if (h === 'black' || h === 'matcha') return { hero: state.hero, p: h };
+    return { hero: state.hero, p: 'home' };
+  }
+  function showNote() {
+    note.textContent = NOTES[state.hero]; note.classList.remove('is-off');
+    clearTimeout(noteTimer); noteTimer = setTimeout(function () { note.classList.add('is-off'); }, 5000);
+  }
+  function render() {
+    var r = parse(); var heroChanged = r.hero !== state.hero; var pageChanged = r.p !== state.p;
+    state.hero = r.hero; state.p = r.p;
+    app.innerHTML = state.p === 'home' ? home() : pdp(state.p);
+    document.querySelectorAll('[data-hero]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.hero === state.hero)); });
+    document.querySelectorAll('[data-p]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.p === state.p)); });
+    if (heroChanged || note.textContent === '') showNote();
+    if (pageChanged || heroChanged) window.scrollTo(0, 0);
   }
   function say(msg) { toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 1800); }
 
   document.addEventListener('click', function (e) {
     var t = e.target.closest('button, a'); if (!t) return;
-    if (t.dataset.v) { location.hash = go(t.dataset.v, state.p); return; }
-    if (t.dataset.p) { location.hash = go(state.v, t.dataset.p); return; }
-    if (t.dataset.filter) { state.filter = t.dataset.filter; render(true); return; }
-    if (t.dataset.size) { var g = t.closest('.sizes'); g.querySelectorAll('.size').forEach(function (s) { s.setAttribute('aria-pressed', String(s === t)); }); return; }
-    if (t.dataset.add) {
-      var sz = (app.querySelector('.size[aria-pressed="true"]') || {}).dataset; state.bag += 1;
-      app.querySelectorAll('[data-bagn]').forEach(function (n) { n.textContent = state.bag; });
-      say('Added · ' + P[t.dataset.add].title + (sz ? ' · ' + sz.size : '')); return;
-    }
+    if (t.dataset.hero) { location.hash = 'portada-' + t.dataset.hero; return; }
+    if (t.dataset.p) { location.hash = t.dataset.p === 'home' ? 'portada-' + state.hero : t.dataset.p; return; }
+    if (t.dataset.size) { t.parentNode.querySelectorAll('.size').forEach(function (s) { s.setAttribute('aria-pressed', String(s === t)); }); return; }
+    if (t.dataset.add) { var sz = app.querySelector('.size[aria-pressed="true"]'); state.bag += 1; app.querySelectorAll('[data-bagn]').forEach(function (n) { n.textContent = state.bag; }); say('Added · ' + P[t.dataset.add].title + (sz ? ' · ' + sz.dataset.size : '')); return; }
     if (t.hasAttribute('data-bag')) { e.preventDefault(); say(state.bag ? 'Bag · ' + state.bag + (state.bag === 1 ? ' set' : ' sets') : 'Your bag is empty'); return; }
-    if (t.dataset.view) { var of = app.querySelector('.pdp .outfit'); of.classList.toggle('is-back', t.dataset.view === 'back'); t.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === t)); }); return; }
-    if (t.dataset.thumb) {
-      var st = app.querySelector('[data-stage]'); var views = JSON.parse(st.dataset.views); var v = views[Number(t.dataset.thumb)];
-      st.innerHTML = img(v.src, v.alt, v.cut ? '' : 'photo', false);
-      t.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === t)); }); return;
+    if (t.hasAttribute('data-shop')) {
+      e.preventDefault();
+      var go = function () { var s = document.getElementById('shop'); if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      if (state.p !== 'home') { location.hash = 'portada-' + state.hero; setTimeout(go, 80); } else { go(); }
     }
-    if (t.dataset.scroll) { var el = document.getElementById(t.dataset.scroll); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return; }
-    var href = t.getAttribute('href') || '';
-    if (/^#[abc](-[a-z]+)?#shop$/.test(href)) { e.preventDefault(); var hv = href.slice(1).split('#')[0]; if (location.hash.slice(1) !== hv) { location.hash = hv; } setTimeout(function () { var s = document.getElementById('shop'); if (s) s.scrollIntoView({ behavior: 'smooth' }); }, 60); }
   });
   document.addEventListener('submit', function (e) { if (e.target.matches('[data-news]')) { e.preventDefault(); e.target.reset(); say('Thank you · You are on the list'); } });
-  document.addEventListener('keydown', function (e) {
-    if (e.target.matches('input, textarea')) return;
-    var map = { '1': 'a', '2': 'b', '3': 'c' };
-    if (map[e.key]) location.hash = go(map[e.key], state.p);
-  });
-  window.addEventListener('hashchange', function () { render(false); });
-  render(false);
+  document.addEventListener('keydown', function (e) { if (e.target.matches('input, textarea')) return; if (/^[123]$/.test(e.key)) location.hash = 'portada-' + e.key; });
+  window.addEventListener('hashchange', render);
+  render();
 })();
 </script>
 
