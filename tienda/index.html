@@ -106,9 +106,9 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .h2 .media img { object-position: 72% 50%; }
 
 /* Hero 3 · banner, type on the sky */
-.h3 { position: relative; aspect-ratio: 3 / 2; max-width: 100%; color: var(--bone); }
+.h3 { position: relative; aspect-ratio: 16 / 9; max-width: 100%; color: var(--bone); }
 .h3 .media { position: absolute; inset: 0; }
-.h3 .media img { object-position: 62% 50%; }
+.h3 .media img { object-position: 62% 60%; }
 .h3 .sky { position: absolute; left: 0; right: 0; top: 0; padding-top: clamp(40px, 8vh, 88px); }
 .h3 .sky .inner { display: grid; justify-items: start; gap: 18px; max-width: 560px; }
 .h3 .sky .label { text-shadow: 0 1px 12px var(--sky-shade); }
@@ -142,10 +142,36 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .ig { padding-block: 8px 24px; }
 .ig__h { display: grid; justify-items: center; gap: 10px; text-align: center; margin-bottom: 24px; }
 .ig__h .double { font-size: clamp(30px, 3vw, 44px); }
-.ig__row { display: flex; gap: 3px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); scroll-padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); cursor: grab; -webkit-user-select: none; user-select: none; }
+.ig__row { display: flex; gap: 3px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; cursor: grab; -webkit-user-select: none; user-select: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
 .ig__row::-webkit-scrollbar { display: none; }
-.ig__row.is-drag { cursor: grabbing; scroll-snap-type: none; }
-.ig__row .media { flex: 0 0 clamp(220px, 24vw, 320px); aspect-ratio: 4 / 5; scroll-snap-align: start; }
+.ig__row.is-drag { cursor: grabbing; }
+.ig__row .media { flex: 0 0 clamp(220px, 24vw, 320px); aspect-ratio: 4 / 5; }
+
+/* Bag dropdown */
+.hdr__bag { justify-self: end; border: 0; background: none; padding: 12px 0; color: inherit; font-family: var(--label); font-size: 14px; letter-spacing: 0.22em; text-transform: uppercase; }
+.hdr__bag[aria-expanded="true"] { text-decoration: underline; text-underline-offset: 6px; }
+.bagp { position: fixed; z-index: 70; right: max(var(--gut), calc((100vw - var(--wrap)) / 2 + var(--gut))); width: min(400px, calc(100vw - 2 * var(--gut))); max-height: min(72vh, 640px); display: flex; flex-direction: column; background: var(--bone); border: 1px solid var(--hair); box-shadow: 0 18px 44px rgba(20, 20, 20, 0.14); opacity: 0; transform: translateY(-6px) scale(0.99); transform-origin: top right; visibility: hidden; transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s linear 0.18s; }
+.bagp.is-open { opacity: 1; transform: none; visibility: visible; transition: opacity 0.18s ease-out, transform 0.18s ease-out, visibility 0s; }
+.bagp__head { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 20px; border-bottom: 1px solid var(--hair); }
+.bagp__head .label { font-size: 13px; }
+.bagp__list { flex: 1; min-height: 0; overflow-y: auto; margin: 0; padding: 0 20px; list-style: none; }
+.bline { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--hair); }
+.bline:last-child { border-bottom: 0; }
+.bline .media { aspect-ratio: 4 / 5; }
+.bline__t { margin: 0; font-size: 22px; font-weight: 400; line-height: 1; }
+.bline__t em { font-style: italic; }
+.bline__meta { margin: 6px 0 0; font-size: 12px; }
+.qty { display: inline-flex; align-items: center; margin-top: 12px; border: 1px solid var(--edge); }
+.qty button { width: 34px; height: 34px; padding: 0; border: 0; background: none; font-family: var(--digits); font-size: 19px; line-height: 1; transition: background-color 0.15s ease; }
+.qty button:hover { background: var(--stone); }
+.qty span { min-width: 28px; text-align: center; font-size: 16px; }
+.bline__r { display: grid; justify-items: end; align-content: space-between; }
+.linkbtn { border: 0; background: none; padding: 0; color: inherit; font-family: var(--label); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
+.bagp__foot { display: grid; gap: 12px; padding: 16px 20px 20px; border-top: 1px solid var(--hair); }
+.bagp__empty { display: grid; justify-items: start; gap: 14px; padding: 24px 20px 26px; }
+.bagp__empty p { margin: 0; }
+@keyframes lineIn { from { background: var(--matcha); } to { background: transparent; } }
+.bline.is-new { animation: lineIn 1.2s ease-out; }
 .ig__row img { pointer-events: none; -webkit-user-drag: none; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
 @media (hover: hover) { .ig__row .media:hover img { transform: scale(1.03); } }
 
@@ -214,6 +240,7 @@ main { padding-bottom: 96px; }
 </style>
 
 <main id="app" aria-live="polite"></main>
+<div class="bagp" id="bagp" role="dialog" aria-labelledby="bagp-title" hidden></div>
 <div class="toast" role="status" data-toast></div>
 <p class="pick__note" data-note></p>
 <nav class="pick" aria-label="Vista previa: portada y página">
@@ -250,7 +277,9 @@ main { padding-bottom: 96px; }
     '2': 'Portada 2 · Partida: el texto sobre matcha a un lado y la chica en Marbella en horizontal, más grande.',
     '3': 'Portada 3 · Banner: la foto horizontal a todo el ancho, con el texto y Shop the drop solo sobre el cielo.'
   };
-  var state = { hero: '1', p: 'home', bag: 0 };
+  var state = { hero: '1', p: 'home', bag: [], bagOpen: false };
+  function bagCount() { return state.bag.reduce(function (n, l) { return n + l.qty; }, 0); }
+  function priceOf(k) { return Number(P[k].price.replace(/[^\d]/g, '')); }
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function dbl(p) { return esc(p.first) + ' <em>set</em>'; }
@@ -264,7 +293,7 @@ main { padding-bottom: 96px; }
         '<nav class="hdr__nav label" aria-label="Main"><a href="#shop" data-shop>Shop</a><a href="#black">Black</a><a href="#matcha">Matcha</a></nav>' +
         '<a class="hdr__menu label" href="#shop" data-shop>Menu</a>' +
         '<a class="hdr__logo" href="' + href('home') + '">' + img('img/naw-logo-taupe.png', 'NAW', '', false) + '</a>' +
-        '<a class="hdr__bag label" href="#" data-bag>Bag <span class="num" data-bagn>' + state.bag + '</span></a>' +
+        '<button type="button" class="hdr__bag" data-bag aria-controls="bagp" aria-expanded="' + state.bagOpen + '">Bag <span class="num" data-bagn>' + bagCount() + '</span></button>' +
       '</div></header>' + inner +
       '<footer class="ftr"><div class="wrap ftr__in">' +
         '<div class="news"><p class="label" style="color:var(--gold);margin:0">Drop <span class="fig9">002</span></p><p class="double">Be the first <em>to know.</em></p><form class="news__row" data-news><label class="label" for="news-email" style="position:absolute;left:-9999px">Email address</label><input id="news-email" type="email" placeholder="Email address" required><button class="btn btn--bone" type="submit">Join</button></form></div>' +
@@ -297,7 +326,7 @@ main { padding-bottom: 96px; }
         '<div><span class="label">Help</span><p>DM “NAW” on Instagram for sizes.</p></div>' +
       '</section>' +
       '<section class="ig" aria-label="NAW on Instagram"><div class="wrap ig__h"><p class="label" style="margin:0">@nawyoga</p><p class="double">Discover the world <em>of NAW.</em></p></div><div class="ig__row" data-drag>' +
-        IG_TILES.map(function (t) { return '<a class="media" href="' + IG + '" target="_blank" rel="noopener">' + img(t[0], t[1]) + '</a>'; }).join('') +
+        [0, 1, 2].map(function (copy) { return IG_TILES.map(function (t) { return '<a class="media" href="' + IG + '" target="_blank" rel="noopener"' + (copy === 1 ? '' : ' aria-hidden="true" tabindex="-1"') + '>' + img(t[0], copy === 1 ? t[1] : '') + '</a>'; }).join(''); }).join('') +
       '</div></section>'
     );
   }
@@ -345,7 +374,9 @@ main { padding-bottom: 96px; }
   function render() {
     var r = parse(); var heroChanged = r.hero !== state.hero; var pageChanged = r.p !== state.p;
     state.hero = r.hero; state.p = r.p;
+    if (pageChanged || heroChanged) closeBag(false);
     app.innerHTML = state.p === 'home' ? home() : pdp(state.p);
+    initLoop();
     document.querySelectorAll('[data-hero]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.hero === state.hero)); });
     document.querySelectorAll('[data-p]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.p === state.p)); });
     if (heroChanged || note.textContent === '') showNote();
@@ -353,19 +384,100 @@ main { padding-bottom: 96px; }
   }
   function say(msg) { toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 1800); }
 
+  /* ---------- Bag dropdown ---------- */
+  var bagp = document.getElementById('bagp');
+  function money(n) { return '€' + n; }
+  function renderBag(newKey) {
+    var n = bagCount();
+    document.querySelectorAll('[data-bagn]').forEach(function (el) { el.textContent = n; });
+    var head = '<div class="bagp__head"><h2 class="label" id="bagp-title" style="margin:0">Your bag' + (n ? ' · <span class="num">' + n + '</span>' : '') + '</h2><button type="button" class="linkbtn" data-bag-close>Close</button></div>';
+    if (!n) {
+      bagp.innerHTML = head + '<div class="bagp__empty"><p>Your bag is empty.</p><a class="btn" href="#shop" data-shop>Shop the drop</a></div>';
+      return;
+    }
+    var total = 0;
+    var lines = state.bag.map(function (l, i) {
+      var p = P[l.k], line = priceOf(l.k) * l.qty; total += line;
+      return '<li class="bline' + (l.k + '|' + l.size === newKey ? ' is-new' : '') + '">' +
+        '<a class="media" href="#' + l.k + '">' + img(p.gallery[0][0], '', '', false) + '</a>' +
+        '<div><a href="#' + l.k + '"><p class="bline__t">' + dbl(p) + '</p></a><p class="label bline__meta">Size ' + esc(l.size) + ' · <span class="num">' + p.price + '</span></p>' +
+          '<div class="qty" role="group" aria-label="Quantity, ' + esc(p.title) + ' ' + esc(l.size) + '"><button type="button" data-dec="' + i + '" aria-label="One less">−</button><span class="num" aria-live="polite">' + l.qty + '</span><button type="button" data-inc="' + i + '" aria-label="One more">+</button></div></div>' +
+        '<div class="bline__r"><span class="num" style="font-size:18px">' + money(line) + '</span><button type="button" class="linkbtn" data-rm="' + i + '">Remove</button></div>' +
+      '</li>';
+    }).join('');
+    bagp.innerHTML = head + '<ul class="bagp__list">' + lines + '</ul>' +
+      '<div class="bagp__foot"><div class="row"><span class="label">Subtotal</span><span class="num" style="font-size:22px">' + money(total) + '</span></div><p class="note">Tax included. Shipping at checkout.</p><button type="button" class="btn btn--full" data-checkout>Checkout</button></div>';
+  }
+  function placeBag() { var h = document.querySelector('.hdr'); if (h) bagp.style.top = Math.max(8, Math.round(h.getBoundingClientRect().bottom) + 8) + 'px'; }
+  function setExpanded() { document.querySelectorAll('[data-bag]').forEach(function (b) { b.setAttribute('aria-expanded', String(state.bagOpen)); }); }
+  function openBag(newKey) { renderBag(newKey); placeBag(); state.bagOpen = true; bagp.hidden = false; void bagp.offsetWidth; bagp.classList.add('is-open'); setExpanded(); var c = bagp.querySelector('[data-bag-close]'); if (c && !newKey) c.focus({ preventScroll: true }); }
+  function closeBag(focusBack) { if (!state.bagOpen) return; state.bagOpen = false; bagp.classList.remove('is-open'); setExpanded(); if (focusBack) { var b = document.querySelector('[data-bag]'); if (b) b.focus({ preventScroll: true }); } }
+  window.addEventListener('scroll', function () { if (state.bagOpen) placeBag(); }, { passive: true });
+  window.addEventListener('resize', function () { if (state.bagOpen) placeBag(); });
+
   document.addEventListener('click', function (e) {
+    if (state.bagOpen && !e.target.closest('#bagp') && !e.target.closest('[data-bag]')) closeBag(false);
     var t = e.target.closest('button, a'); if (!t) return;
     if (t.dataset.hero) { location.hash = 'portada-' + t.dataset.hero; return; }
     if (t.dataset.p) { location.hash = t.dataset.p === 'home' ? 'portada-' + state.hero : t.dataset.p; return; }
     if (t.dataset.size) { t.parentNode.querySelectorAll('.size').forEach(function (s) { s.setAttribute('aria-pressed', String(s === t)); }); return; }
-    if (t.dataset.add) { var sz = app.querySelector('.size[aria-pressed="true"]'); state.bag += 1; app.querySelectorAll('[data-bagn]').forEach(function (n) { n.textContent = state.bag; }); say('Added · ' + P[t.dataset.add].title + (sz ? ' · ' + sz.dataset.size : '')); return; }
-    if (t.hasAttribute('data-bag')) { e.preventDefault(); say(state.bag ? 'Bag · ' + state.bag + (state.bag === 1 ? ' set' : ' sets') : 'Your bag is empty'); return; }
+    if (t.dataset.add) {
+      var sz = app.querySelector('.size[aria-pressed="true"]'); var size = sz ? sz.dataset.size : SIZES[0]; var k = t.dataset.add;
+      var found = state.bag.filter(function (l) { return l.k === k && l.size === size; })[0];
+      if (found) found.qty += 1; else state.bag.push({ k: k, size: size, qty: 1 });
+      openBag(k + '|' + size); return;
+    }
+    if (t.hasAttribute('data-bag')) { e.preventDefault(); if (state.bagOpen) closeBag(false); else openBag(); return; }
+    if (t.hasAttribute('data-bag-close')) { closeBag(true); return; }
+    if (t.dataset.inc) { state.bag[Number(t.dataset.inc)].qty += 1; renderBag(); var b1 = bagp.querySelector('[data-inc="' + t.dataset.inc + '"]'); if (b1) b1.focus({ preventScroll: true }); return; }
+    if (t.dataset.dec) { var li = Number(t.dataset.dec); state.bag[li].qty -= 1; if (state.bag[li].qty <= 0) state.bag.splice(li, 1); renderBag(); var b2 = bagp.querySelector('[data-dec="' + t.dataset.dec + '"]'); if (b2) b2.focus({ preventScroll: true }); return; }
+    if (t.dataset.rm) { state.bag.splice(Number(t.dataset.rm), 1); renderBag(); return; }
+    if (t.hasAttribute('data-checkout')) { say('Checkout opens in Shopify'); return; }
+    if (bagp.contains(t) && t.getAttribute('href') && t.getAttribute('href').charAt(0) === '#' && !t.hasAttribute('data-shop')) { closeBag(false); }
     if (t.hasAttribute('data-shop')) {
-      e.preventDefault();
+      e.preventDefault(); closeBag(false);
       var go = function () { var s = document.getElementById('shop'); if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
       if (state.p !== 'home') { location.hash = 'portada-' + state.hero; setTimeout(go, 80); } else { go(); }
     }
   });
+  /* ---------- Endless Instagram strip ----------
+     Three copies of the same tiles; the view always sits in the middle copy and jumps one copy back or forward
+     when it drifts out, so it never ends. It glides slowly on its own and stops while hovered, touched or dragged. */
+  var loop = null;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function initLoop() {
+    var row = app.querySelector('[data-drag]'); if (!row) { loop = null; return; }
+    var n = IG_TILES.length;
+    var L = { row: row, setW: 0, pos: 0, paused: false, resumeAt: 0, last: 0 };
+    function measure() { var a = row.children[0], b = row.children[n]; L.setW = b.offsetLeft - a.offsetLeft; }
+    measure(); row.scrollLeft = L.setW; L.pos = row.scrollLeft;
+    row.addEventListener('scroll', function () {
+      if (!L.setW) return; var s = row.scrollLeft, shift = 0;
+      if (s < L.setW * 0.5) shift = L.setW; else if (s > L.setW * 1.5) shift = -L.setW;
+      if (shift) { row.scrollLeft = s + shift; L.pos += shift; if (drag && drag.row === row) drag.left += shift; }
+      if (L.paused) L.pos = row.scrollLeft;
+    }, { passive: true });
+    row.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') L.paused = true; });
+    row.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && !(drag && drag.row === row)) { L.paused = false; L.pos = row.scrollLeft; } });
+    row.addEventListener('touchstart', function () { L.paused = true; L.resumeAt = 0; }, { passive: true });
+    row.addEventListener('touchend', function () { L.resumeAt = performance.now() + 2500; }, { passive: true });
+    row.addEventListener('focusin', function () { L.paused = true; });
+    row.addEventListener('focusout', function () { L.paused = false; L.pos = row.scrollLeft; });
+    L.measure = measure; loop = L;
+    if (!reduceMotion) requestAnimationFrame(function tick(now) {
+      if (loop !== L || !row.isConnected) return;
+      var dt = L.last ? Math.min(100, now - L.last) : 16; L.last = now;
+      if (L.resumeAt && now > L.resumeAt) { L.paused = false; L.resumeAt = 0; L.pos = row.scrollLeft; }
+      if (!L.paused && !document.hidden && L.setW) {
+        L.pos += 0.028 * dt;
+        if (L.pos > L.setW * 1.5) L.pos -= L.setW;
+        row.scrollLeft = L.pos;
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  window.addEventListener('resize', function () { if (loop && loop.row.isConnected) { var r = loop.row.scrollLeft / (loop.setW || 1); loop.measure(); loop.row.scrollLeft = r * loop.setW; loop.pos = loop.row.scrollLeft; } });
+
   // Drag to slide with the mouse; touch keeps its native swipe.
   var drag = null;
   document.addEventListener('pointerdown', function (e) {
@@ -380,12 +492,16 @@ main { padding-bottom: 96px; }
   function endDrag() {
     if (!drag) return; var d = drag; drag = null;
     if (d.moved) { d.row.classList.remove('is-drag'); d.row.dataset.justDragged = '1'; setTimeout(function () { delete d.row.dataset.justDragged; }, 0); }
+    if (loop && loop.row === d.row) { loop.pos = d.row.scrollLeft; if (!d.row.matches(':hover')) loop.paused = false; }
   }
   ['pointerup', 'pointercancel', 'mouseup'].forEach(function (ev) { document.addEventListener(ev, endDrag); });
   window.addEventListener('blur', endDrag);
   document.addEventListener('click', function (e) { var row = e.target.closest('[data-drag]'); if (row && row.dataset.justDragged) { e.preventDefault(); e.stopPropagation(); } }, true);
   document.addEventListener('submit', function (e) { if (e.target.matches('[data-news]')) { e.preventDefault(); e.target.reset(); say('Thank you · You are on the list'); } });
-  document.addEventListener('keydown', function (e) { if (e.target.matches('input, textarea')) return; if (/^[123]$/.test(e.key)) location.hash = 'portada-' + e.key; });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && state.bagOpen) { closeBag(true); return; }
+    if (e.target.matches('input, textarea')) return; if (/^[123]$/.test(e.key)) location.hash = 'portada-' + e.key;
+  });
   window.addEventListener('hashchange', render);
   render();
 })();
