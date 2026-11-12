@@ -140,7 +140,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 
 /* Product page */
 .pdp { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); padding-block: 20px 72px; }
-.gal { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.gal { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-self: start; align-content: start; }
 .gal .media { aspect-ratio: 4 / 5; }
 .info { position: sticky; top: 96px; align-self: start; display: grid; gap: 20px; }
 .info .double { font-size: clamp(44px, 4.4vw, 64px); }
@@ -226,7 +226,7 @@ main { padding-bottom: 96px; }
   var P = {
     black: {
       key: 'black', first: 'Black', title: 'Black set', price: '€95', swatch: '#141414', other: 'matcha', figure: 'gold',
-      gallery: [['img/black-back.jpg', 'The black top turned over: the teardrop cut-out with the NAW logo below, the leggings beside it'], ['img/black-front.jpg', 'The black NAW set on cream boucle, the top seen from the front, plain'], ['img/black-chair-v2.jpg', 'The black set on a cognac leather armchair with a cream leather cushion, the top showing its back and logo'], ['img/black-back-v2.jpg', 'The black set laid out casually on cream boucle, the top face down with the logo under the cut-out']]
+      gallery: [['img/black-back.jpg', 'The black top turned over: the teardrop cut-out with the NAW logo below, the leggings beside it'], ['img/black-front.jpg', 'The black NAW set on cream boucle, the top seen from the front, plain'], ['img/black-chair-v3.jpg', 'The black set on a cream leather armchair with a matching cream leather cushion, the top showing its back and logo'], ['img/black-back-v2.jpg', 'The black set laid out casually on cream boucle, the top face down with the logo under the cut-out']]
     },
     matcha: {
       key: 'matcha', first: 'Matcha', title: 'Matcha set', price: '€130', swatch: '#d3d9be', other: 'black', figure: 'copper',
