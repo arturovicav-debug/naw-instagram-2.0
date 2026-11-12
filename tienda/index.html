@@ -143,9 +143,10 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .ig { padding-block: 8px 24px; }
 .ig__h { display: grid; justify-items: center; gap: 10px; text-align: center; margin-bottom: 24px; }
 .ig__h .double { font-size: clamp(30px, 3vw, 44px); }
-.ig__row { display: flex; gap: 3px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; cursor: grab; -webkit-user-select: none; user-select: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
+.ig__row { overflow: hidden; touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
 .ig__row::-webkit-scrollbar { display: none; }
 .ig__row.is-drag { cursor: grabbing; }
+.ig__track { display: flex; gap: 3px; width: max-content; will-change: transform; backface-visibility: hidden; transform: translate3d(0, 0, 0); }
 .ig__row .media { flex: 0 0 clamp(220px, 24vw, 320px); aspect-ratio: 4 / 5; }
 
 /* Bag dropdown */
@@ -328,9 +329,9 @@ main { padding-bottom: 96px; }
         '<div><span class="label">The back</span><p>The logo sits under the drop.</p></div>' +
         '<div><span class="label">Help</span><p>DM “NAW” on Instagram for sizes.</p></div>' +
       '</section>' +
-      '<section class="ig" aria-label="NAW on Instagram"><div class="wrap ig__h"><p class="label" style="margin:0">@nawyoga</p><p class="double">Discover the world <em>of NAW.</em></p></div><div class="ig__row" data-drag>' +
+      '<section class="ig" aria-label="NAW on Instagram"><div class="wrap ig__h"><p class="label" style="margin:0">@nawyoga</p><p class="double">Discover the world <em>of NAW.</em></p></div><div class="ig__row" data-drag><div class="ig__track" data-igtrack>' +
         [0, 1, 2].map(function (copy) { return IG_TILES.map(function (t) { return '<a class="media" href="' + IG + '" target="_blank" rel="noopener"' + (copy === 1 ? '' : ' aria-hidden="true" tabindex="-1"') + '>' + img(t[0], copy === 1 ? t[1] : '') + '</a>'; }).join(''); }).join('') +
-      '</div></section>'
+      '</div></div></section>'
     );
   }
   var IG_TILES = [
@@ -446,63 +447,74 @@ main { padding-bottom: 96px; }
     }
   });
   /* ---------- Endless Instagram strip ----------
-     Three copies of the same tiles; the view always sits in the middle copy and jumps one copy back or forward
-     when it drifts out, so it never ends. It glides slowly on its own and stops while hovered, touched or dragged. */
+     Three copies of the same tiles inside one track. The track moves with a GPU transform (sub-pixel, so it glides
+     instead of stepping pixel by pixel) and always shows the middle copy: when it drifts one copy away it jumps back
+     by exactly one copy, which looks the same, so it never ends. It drifts on its own; drag, swipe or trackpad take
+     over, and on release it keeps the throw and eases back into the drift. */
   var loop = null;
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DRIFT = 0.042; // px per ms
   function initLoop() {
     var row = app.querySelector('[data-drag]'); if (!row) { loop = null; return; }
-    var n = IG_TILES.length;
-    var L = { row: row, setW: 0, pos: 0, paused: false, resumeAt: 0, last: 0 };
-    function measure() { var a = row.children[0], b = row.children[n]; L.setW = b.offsetLeft - a.offsetLeft; }
-    measure(); row.scrollLeft = L.setW; L.pos = row.scrollLeft;
-    row.addEventListener('scroll', function () {
-      if (!L.setW) return; var s = row.scrollLeft, shift = 0;
-      if (s < L.setW * 0.5) shift = L.setW; else if (s > L.setW * 1.5) shift = -L.setW;
-      if (shift) { row.scrollLeft = s + shift; L.pos += shift; if (drag && drag.row === row) drag.left += shift; }
-      if (L.paused) L.pos = row.scrollLeft;
-    }, { passive: true });
-    // It keeps gliding even with the cursor over it; it only hands over while someone drags, swipes or scrolls it, then carries on from there.
-    row.addEventListener('touchstart', function () { L.paused = true; L.resumeAt = 0; }, { passive: true });
-    row.addEventListener('touchend', function () { L.resumeAt = performance.now() + 1200; }, { passive: true });
-    row.addEventListener('wheel', function () { L.paused = true; L.resumeAt = performance.now() + 900; }, { passive: true });
-    row.addEventListener('focusin', function () { L.paused = true; });
-    row.addEventListener('focusout', function () { L.paused = false; L.pos = row.scrollLeft; });
+    var track = row.querySelector('[data-igtrack]'); var n = IG_TILES.length;
+    var L = { row: row, setW: 0, x: 0, v: 0, drag: null, last: 0 };
+    function measure() { var a = track.children[0], b = track.children[n]; L.setW = b.offsetLeft - a.offsetLeft; }
+    function wrap() {
+      if (!L.setW) return;
+      while (L.x < L.setW * 0.5) { L.x += L.setW; if (L.drag) L.drag.x0 += L.setW; }
+      while (L.x > L.setW * 1.5) { L.x -= L.setW; if (L.drag) L.drag.x0 -= L.setW; }
+    }
+    function paint() { track.style.transform = 'translate3d(' + (-L.x).toFixed(2) + 'px,0,0)'; }
+    measure(); L.x = L.setW; paint();
+
+    row.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      L.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: L.x, moved: false, lastX: e.clientX, lastT: performance.now(), type: e.pointerType };
+      L.v = 0;
+    });
+    row.addEventListener('pointermove', function (e) {
+      var d = L.drag; if (!d || e.pointerId !== d.id) return;
+      var dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+      if (!d.moved) {
+        if (Math.abs(dx) < 6) return;
+        if (d.type !== 'mouse' && Math.abs(dy) > Math.abs(dx)) { L.drag = null; return; }
+        d.moved = true; row.classList.add('is-drag');
+        try { row.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+      e.preventDefault();
+      var now = performance.now(), step = Math.max(1, now - d.lastT);
+      L.v = 0.75 * L.v + 0.25 * (-(e.clientX - d.lastX) / step);
+      d.lastX = e.clientX; d.lastT = now;
+      L.x = d.x0 - dx; wrap(); paint();
+    });
+    function end(e) {
+      var d = L.drag; if (!d || (e && e.pointerId !== d.id)) return; L.drag = null;
+      if (d.moved) { row.classList.remove('is-drag'); row.dataset.justDragged = '1'; setTimeout(function () { delete row.dataset.justDragged; }, 0); }
+      if (performance.now() - d.lastT > 90) L.v = 0;
+      L.v = Math.max(-1.4, Math.min(1.4, L.v));
+    }
+    row.addEventListener('pointerup', end); row.addEventListener('pointercancel', end); row.addEventListener('lostpointercapture', end);
+    row.addEventListener('wheel', function (e) {
+      var dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0); if (!dx) return;
+      e.preventDefault(); L.x += dx; L.v = 0; wrap(); paint();
+    }, { passive: false });
+    row.addEventListener('click', function (e) { if (row.dataset.justDragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+    row.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    row.addEventListener('scroll', function () { if (row.scrollLeft) row.scrollLeft = 0; });
     L.measure = measure; loop = L;
-    if (!reduceMotion) requestAnimationFrame(function tick(now) {
+
+    requestAnimationFrame(function tick(now) {
       if (loop !== L || !row.isConnected) return;
-      var dt = L.last ? Math.min(100, now - L.last) : 16; L.last = now;
-      if (L.resumeAt && now > L.resumeAt) { L.paused = false; L.resumeAt = 0; L.pos = row.scrollLeft; }
-      if (!L.paused && !document.hidden && L.setW) {
-        L.pos += 0.04 * dt;
-        if (L.pos > L.setW * 1.5) L.pos -= L.setW;
-        row.scrollLeft = L.pos;
+      var dt = L.last ? Math.min(50, now - L.last) : 16; L.last = now;
+      if (!L.drag && !document.hidden && L.setW) {
+        var target = reduceMotion ? 0 : DRIFT;
+        L.v += (target - L.v) * (1 - Math.exp(-dt / 320));
+        L.x += L.v * dt; wrap(); paint();
       }
       requestAnimationFrame(tick);
     });
   }
-  window.addEventListener('resize', function () { if (loop && loop.row.isConnected) { var r = loop.row.scrollLeft / (loop.setW || 1); loop.measure(); loop.row.scrollLeft = r * loop.setW; loop.pos = loop.row.scrollLeft; } });
-
-  // Drag to slide with the mouse; touch keeps its native swipe.
-  var drag = null;
-  document.addEventListener('pointerdown', function (e) {
-    var row = e.target.closest('[data-drag]'); if (!row || e.pointerType !== 'mouse' || e.button !== 0) return;
-    drag = { row: row, x: e.clientX, left: row.scrollLeft, moved: false };
-    if (loop && loop.row === row) { loop.paused = true; loop.resumeAt = 0; }
-  });
-  document.addEventListener('pointermove', function (e) {
-    if (!drag) return; var dx = e.clientX - drag.x;
-    if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; drag.row.classList.add('is-drag'); }
-    if (drag.moved) { e.preventDefault(); drag.row.scrollLeft = drag.left - dx; }
-  });
-  function endDrag() {
-    if (!drag) return; var d = drag; drag = null;
-    if (d.moved) { d.row.classList.remove('is-drag'); d.row.dataset.justDragged = '1'; setTimeout(function () { delete d.row.dataset.justDragged; }, 0); }
-    if (loop && loop.row === d.row) { loop.pos = d.row.scrollLeft; loop.paused = false; }
-  }
-  ['pointerup', 'pointercancel', 'mouseup'].forEach(function (ev) { document.addEventListener(ev, endDrag); });
-  window.addEventListener('blur', endDrag);
-  document.addEventListener('click', function (e) { var row = e.target.closest('[data-drag]'); if (row && row.dataset.justDragged) { e.preventDefault(); e.stopPropagation(); } }, true);
+  window.addEventListener('resize', function () { if (loop && loop.row.isConnected) { var r = loop.x / (loop.setW || 1); loop.measure(); loop.x = r * loop.setW; } });
   document.addEventListener('submit', function (e) { if (e.target.matches('[data-news]')) { e.preventDefault(); e.target.reset(); say('Thank you · You are on the list'); } });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && state.bagOpen) { closeBag(true); return; }
