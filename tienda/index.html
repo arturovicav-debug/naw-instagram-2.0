@@ -106,7 +106,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .h2 .media img { object-position: 72% 50%; }
 
 /* Hero 3 · banner, type on the sky */
-.h3 { position: relative; height: min(86vh, 820px); min-height: 520px; color: var(--bone); }
+.h3 { position: relative; aspect-ratio: 3 / 2; max-width: 100%; color: var(--bone); }
 .h3 .media { position: absolute; inset: 0; }
 .h3 .media img { object-position: 62% 50%; }
 .h3 .sky { position: absolute; left: 0; right: 0; top: 0; padding-top: clamp(40px, 8vh, 88px); }
@@ -137,6 +137,17 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .story__txt .double { font-size: clamp(46px, 5vw, 80px); }
 .vals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 64px; }
 .vals p { margin: 8px 0 0; font-size: 22px; line-height: 1.25; }
+
+/* Instagram slider */
+.ig { padding-block: 8px 24px; }
+.ig__h { display: grid; justify-items: center; gap: 10px; text-align: center; margin-bottom: 24px; }
+.ig__h .double { font-size: clamp(30px, 3vw, 44px); }
+.ig__row { display: flex; gap: 3px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); padding-right: max(var(--gut), env(safe-area-inset-right, 0px)); scroll-padding-left: max(var(--gut), env(safe-area-inset-left, 0px)); cursor: grab; -webkit-user-select: none; user-select: none; }
+.ig__row::-webkit-scrollbar { display: none; }
+.ig__row.is-drag { cursor: grabbing; scroll-snap-type: none; }
+.ig__row .media { flex: 0 0 clamp(220px, 24vw, 320px); aspect-ratio: 4 / 5; scroll-snap-align: start; }
+.ig__row img { pointer-events: none; -webkit-user-drag: none; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@media (hover: hover) { .ig__row .media:hover img { transform: scale(1.03); } }
 
 /* Product page */
 .pdp { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); padding-block: 20px 72px; }
@@ -183,7 +194,7 @@ main { padding-bottom: 96px; }
   .h2 { grid-template-columns: 1fr; min-height: 0; }
   .h2 .media { aspect-ratio: 4 / 5; }
   .h2 .media img { object-position: 100% 50%; }
-  .h3 { height: 82svh; min-height: 560px; max-height: 760px; }
+  .h3 { aspect-ratio: auto; height: 82svh; min-height: 560px; max-height: 760px; }
   .h3 .media img { object-position: 96% 50%; }
   .h3 .sky { padding-top: 26px; }
   .h3 .sky .inner { gap: 12px; }
@@ -284,9 +295,19 @@ main { padding-bottom: 96px; }
         '<div><span class="label">NAW is NOW</span><p>Drop <span class="fig9">001</span>, in black and matcha.</p></div>' +
         '<div><span class="label">The back</span><p>The logo sits under the drop.</p></div>' +
         '<div><span class="label">Help</span><p>DM “NAW” on Instagram for sizes.</p></div>' +
-      '</section>'
+      '</section>' +
+      '<section class="ig" aria-label="NAW on Instagram"><div class="wrap ig__h"><p class="label" style="margin:0">@nawyoga</p><p class="double">Discover the world <em>of NAW.</em></p></div><div class="ig__row" data-drag>' +
+        IG_TILES.map(function (t) { return '<a class="media" href="' + IG + '" target="_blank" rel="noopener">' + img(t[0], t[1]) + '</a>'; }).join('') +
+      '</div></section>'
     );
   }
+  var IG_TILES = [
+    ['img/matcha-colour.jpg', 'Matcha colour grid: iced matcha, the set, the colour card and a spilled glass on marble'],
+    ['img/black-back.jpg', 'The black top from the back with the logo under the cut-out'],
+    ['img/matcha-swirl.jpg', 'Close-up of matcha swirling into milk'],
+    ['img/matcha-back.jpg', 'The matcha top from the back with the logo under the cut-out'],
+    ['img/black-chair-v3.jpg', 'The black set on a cream leather armchair']
+  ];
 
   function pdp(k) {
     var p = P[k], o = P[p.other];
@@ -345,6 +366,24 @@ main { padding-bottom: 96px; }
       if (state.p !== 'home') { location.hash = 'portada-' + state.hero; setTimeout(go, 80); } else { go(); }
     }
   });
+  // Drag to slide with the mouse; touch keeps its native swipe.
+  var drag = null;
+  document.addEventListener('pointerdown', function (e) {
+    var row = e.target.closest('[data-drag]'); if (!row || e.pointerType !== 'mouse' || e.button !== 0) return;
+    drag = { row: row, x: e.clientX, left: row.scrollLeft, moved: false };
+  });
+  document.addEventListener('pointermove', function (e) {
+    if (!drag) return; var dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; drag.row.classList.add('is-drag'); }
+    if (drag.moved) { e.preventDefault(); drag.row.scrollLeft = drag.left - dx; }
+  });
+  function endDrag() {
+    if (!drag) return; var d = drag; drag = null;
+    if (d.moved) { d.row.classList.remove('is-drag'); d.row.dataset.justDragged = '1'; setTimeout(function () { delete d.row.dataset.justDragged; }, 0); }
+  }
+  ['pointerup', 'pointercancel', 'mouseup'].forEach(function (ev) { document.addEventListener(ev, endDrag); });
+  window.addEventListener('blur', endDrag);
+  document.addEventListener('click', function (e) { var row = e.target.closest('[data-drag]'); if (row && row.dataset.justDragged) { e.preventDefault(); e.stopPropagation(); } }, true);
   document.addEventListener('submit', function (e) { if (e.target.matches('[data-news]')) { e.preventDefault(); e.target.reset(); say('Thank you · You are on the list'); } });
   document.addEventListener('keydown', function (e) { if (e.target.matches('input, textarea')) return; if (/^[123]$/.test(e.key)) location.hash = 'portada-' + e.key; });
   window.addEventListener('hashchange', render);
